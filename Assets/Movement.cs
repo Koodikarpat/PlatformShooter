@@ -8,20 +8,20 @@ public class Movement : MonoBehaviour {
     public float gravity;
 
     private Rigidbody rb;
-    private Vector3 moveDirection = Vector3.zero;
+    private Vector3 moveDirection;
     private bool candoublejump;
 
     void Start ()
     {
         rb = GetComponent<Rigidbody>();
 	}
-	
-	void Update ()
+
+    void Update()
     {
-        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        moveDirection = new Vector3(Input.GetAxis("Horizontal") * speed, rb.velocity.y, Input.GetAxis("Vertical") * speed);
         moveDirection = transform.TransformDirection(moveDirection);
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
             if (isGrounded())
             {
                 moveDirection.y = jumpSpeed;
@@ -29,27 +29,28 @@ public class Movement : MonoBehaviour {
             }
             else
             {
-            if (candoublejump)
-            {
-                moveDirection.y = jumpSpeed;
+                if (candoublejump)
+                {
+                    moveDirection.y = jumpSpeed;
                     candoublejump = false;
-            }
-          
+                }
+
             }
 
         moveDirection.y -= gravity * Time.deltaTime;
+        rb.velocity = moveDirection;
 
-        rb.AddForce(moveDirection * speed);
-	}
+        
+    }
 
     bool isGrounded ()
     {
         Vector3 position = transform.position;
         position.y = GetComponent<Collider>().bounds.min.y + 0.1f;
-        float length = 0.1f;
+        float length = 0.5f;
         Debug.DrawRay(position, Vector3.down * length);
         bool grounded = Physics.Raycast(position, Vector3.down, length, LayerMask.GetMask("Default"));
-        Debug.Log(LayerMask.GetMask("default"));
+        Debug.Log(grounded);
         return grounded;
     }
 }
