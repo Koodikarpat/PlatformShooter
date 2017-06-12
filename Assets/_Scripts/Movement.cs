@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour {
 	public float gravity;
 
     private Rigidbody rb;
-    private Vector3 moveDirection;
+    public Vector3 moveDirection;
     private bool candoublejump;
 
 	void Start ()
@@ -38,7 +38,7 @@ public class Movement : MonoBehaviour {
             }
 
         moveDirection.y -= gravity * Time.deltaTime;
-        rb.velocity = moveDirection; 
+		rb.velocity = moveDirection; 
     }
 
     bool isGrounded ()

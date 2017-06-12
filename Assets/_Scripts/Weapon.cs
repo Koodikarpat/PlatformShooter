@@ -5,6 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour {
 	private Shooting shooting;
 	public BoxHP boxihp;
+	public Aiming aiming;
 	public float firerate;
 	public float timer;
 	public bool canfire;
@@ -21,13 +22,13 @@ public class Weapon : MonoBehaviour {
 	public int secondaryWeapon = 0;
 
 
-	private float[] primaryFireclass = new float[]{0.5f, 0.7f, 0.5f};                                                                                                              
-	private float[] secondaryFireclass = new float[]{0.5f, 0.7f, 0.5f};
+	private float[] primaryFireclass = new float[]{0.85f, 0.7f, 0.5f};                                                                                                              
+	private float[] secondaryFireclass = new float[]{0.7752f, 0.7752f, 0.5f};
 
-	public static int[] primaryMaxammo = new int[]{10, 20, 30};
-	public int[] primaryCurrentammo = new int[]{10, 20, 30};
-	public static int[] secondaryMaxammo = new int[]{12,20,50};
-	public int[] secondaryCurrentammo = new int[]{12,20,50};
+	private static int[] primaryMaxammo = new int[]{10, 20, 30};
+	private int[] primaryCurrentammo = new int[]{10, 20, 30};
+	private static int[] secondaryMaxammo = new int[]{7,10,50};
+	private int[] secondaryCurrentammo = new int[]{7,10,50};
 
 
 	public void ChangeWeapon(){
@@ -47,6 +48,8 @@ public class Weapon : MonoBehaviour {
 				timer = 0;
 				primaryCurrentammo [primaryWeapon] -= 1;
 				print (primaryCurrentammo [primaryWeapon]);
+
+			aiming.CheckHits ();
 			}
 			
 			
@@ -55,41 +58,33 @@ public class Weapon : MonoBehaviour {
 
 	void ShootSecondary(){
 		
-			if (canfire == true && primaryCurrentammo [primaryWeapon] > 0) {
+			if (canfire == true && secondaryCurrentammo [secondaryWeapon] > 0) {
 
 				print ("pum");
 				timer = 0;
 				secondaryCurrentammo [secondaryWeapon] -= 1;
 				print (secondaryCurrentammo [secondaryWeapon]);
+
+			aiming.CheckHits ();
 			}
 			
 			
 		}
 
 
-	public void CheckHits(){
-		Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
-		boxihp = GameObject.Find ("Cube").GetComponent<BoxHP> ();
-		if (Physics.Raycast (transform.position, forward, 10, LayerMask.GetMask ("Player"))) {
-			
-			print ("Hit!");
-			boxihp.TakeDamage ();
 
-		}
-
-	}
 	public void Shoot() {
 
 		if (selectedWeapon == 0){
 			ShootPrimary ();
 
-			CheckHits ();
+
 
 		}
 		else{
 			ShootSecondary ();
 
-			CheckHits ();
+
 
 
 		}

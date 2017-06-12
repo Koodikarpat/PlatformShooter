@@ -26,19 +26,23 @@ public class CameraClip : MonoBehaviour {
 		minimumDistance = transform.localPosition.z;
 		maximumDistance = transform.localPosition.z;
 		normalDistance = transform.localPosition;
+	
 	}
     void Update ()
     {
 		float currentDistance = normalDistance.z;
 		if (Input.GetKeyDown (KeyCode.Mouse1) && !scoped) {
 			currentDistance = 0;
+			transform.localPosition = new Vector3 (0, 0, 1);
 			scoped = true;
+
 
 		
 
 		} else if( Input.GetKeyDown (KeyCode.Mouse1) && scoped) {
 			currentDistance = maximumDistance;
 			scoped = false;
+
 
 		 
 		}

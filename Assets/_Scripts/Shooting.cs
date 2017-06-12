@@ -14,7 +14,6 @@ public class Shooting : MonoBehaviour {
 		weapon = GetComponent<Weapon> (); 
 
 
-
 	} 
 	void Start ()
     {
@@ -26,7 +25,7 @@ public class Shooting : MonoBehaviour {
 		
 
         
-			if (Input.GetKey (KeyCode.Mouse0)){
+			if (Input.GetKeyDown (KeyCode.Mouse0)){
 			weapon.Shoot ();
 
 			}
