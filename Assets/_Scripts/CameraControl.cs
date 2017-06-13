@@ -32,9 +32,6 @@ public class CameraControl : MonoBehaviour {
 		Quaternion horizontalRotation = Quaternion.Euler(0.0f, rotY, 0.0f);
 		transform.rotation = horizontalRotation;
 
-        Quaternion horizontalRotation = Quaternion.Euler(0.0f, rotY, 0.0f);
-        transform.rotation = horizontalRotation;
-
         Quaternion verticalRotation = Quaternion.Euler(rotX, 0.0f, 0.0f);
         vertical.transform.localRotation = verticalRotation;
 

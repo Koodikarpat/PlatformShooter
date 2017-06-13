@@ -26,7 +26,7 @@ public class Shooting : MonoBehaviour {
 		
 
         
-			if (Input.GetKey (KeyCode.Mouse0)){
+			if (Input.GetKeyDown (KeyCode.Mouse0)){
 			weapon.Shoot ();
 
 			}

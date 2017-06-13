@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour {
 	private Shooting shooting;
+    public Aiming aiming;
 	public BoxHP boxihp;
 	public float firerate;
 	public float timer;
@@ -67,29 +68,20 @@ public class Weapon : MonoBehaviour {
 		}
 
 
-	public void CheckHits(){
-		Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
-		boxihp = GameObject.Find ("Cube").GetComponent<BoxHP> ();
-		if (Physics.Raycast (transform.position, forward, 10, LayerMask.GetMask ("Player"))) {
-			
-			print ("Hit!");
-			boxihp.TakeDamage ();
+	
 
-		}
-
-	}
 	public void Shoot() {
 
 		if (selectedWeapon == 0){
 			ShootPrimary ();
 
-			CheckHits ();
+			aiming.CheckHits ();
 
 		}
 		else{
 			ShootSecondary ();
 
-			CheckHits ();
+			aiming.CheckHits ();
 
 
 		}
