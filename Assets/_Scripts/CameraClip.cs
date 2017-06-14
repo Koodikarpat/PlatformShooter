@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraClip : MonoBehaviour {
+class CameraClip : MonoBehaviour {
 
 	private float minimumDistance;
 	private float maximumDistance;

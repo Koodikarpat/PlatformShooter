@@ -131,9 +131,14 @@ namespace Com.PepeStudios.SuperPepeBrawl
 		/// </summary>
 		public void Connect()
 		{
+<<<<<<< HEAD
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+=======
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+>>>>>>> 871ab4894cee7e33eca6b74a2e1388d4c3d9e0e3
 			// keep track of the will to join a room, because when we come back from the game we will get a callback that we are connected, so we need to know what to do then
 			isConnecting = true;
 

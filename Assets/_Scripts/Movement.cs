@@ -6,12 +6,18 @@ public class Movement : Photon.MonoBehaviour {
 	public float speed;
 	public float jumpSpeed;
 	public float gravity;
+<<<<<<< HEAD
     public static GameObject LocalPlayerInstance;
+=======
+	public static GameObject LocalPlayerInstance;
+
+>>>>>>> 871ab4894cee7e33eca6b74a2e1388d4c3d9e0e3
 
     private Rigidbody rb;
     public Vector3 moveDirection;
     private bool candoublejump;
 
+<<<<<<< HEAD
     void Awake()
     {
         if(photonView.isMine)
@@ -21,10 +27,22 @@ public class Movement : Photon.MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
     }
 
+=======
+	void Awake(){
+		if (photonView.isMine) {
+			Movement.LocalPlayerInstance = this.gameObject;
+	
+		}
+		DontDestroyOnLoad (this.gameObject);
+	}
+>>>>>>> 871ab4894cee7e33eca6b74a2e1388d4c3d9e0e3
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody>();
-	}
+	
+		}
+		
+
 		
     void Update()
 	{

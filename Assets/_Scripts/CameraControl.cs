@@ -4,8 +4,12 @@ using System.Collections;
 public class CameraControl : MonoBehaviour {
 
 	public float mouseSensitivity;
+<<<<<<< HEAD
     public bool cursorlocked;
 
+=======
+	private bool cursorlocked;
+>>>>>>> 871ab4894cee7e33eca6b74a2e1388d4c3d9e0e3
     private float rotY = 0.0f;
     private float rotX = 0.0f;
     public GameObject vertical;
@@ -35,6 +39,7 @@ public class CameraControl : MonoBehaviour {
         Quaternion verticalRotation = Quaternion.Euler(rotX, 0.0f, 0.0f);
         vertical.transform.localRotation = verticalRotation;
 
+<<<<<<< HEAD
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (cursorlocked)
@@ -49,6 +54,20 @@ public class CameraControl : MonoBehaviour {
                 Cursor.lockState = CursorLockMode.Locked;
                 cursorlocked = true;
             }
+=======
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			if (cursorlocked == true) {
+				Cursor.visible = true;
+				Cursor.lockState = CursorLockMode.None;
+				cursorlocked = false;
+			}
+			else 
+				Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+			cursorlocked = true;
+>>>>>>> 871ab4894cee7e33eca6b74a2e1388d4c3d9e0e3
 		}
+
 	}
 }

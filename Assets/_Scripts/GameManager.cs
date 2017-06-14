@@ -69,6 +69,8 @@ namespace Com.MyCompany.MyGame
 
 
 		#region Public Methods
+		[Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
+		public static GameObject LocalPlayerInstance;
 		public void Start(){
 			if (playerPrefab == null) {
 				Debug.LogError ("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'", this);
