@@ -22,13 +22,31 @@ public class Weapon : MonoBehaviour {
 	public int secondaryWeapon = 0;
 
 
-	private float[] primaryFireclass = new float[]{0.5f, 0.7f, 0.5f};                                                                                                              
-	private float[] secondaryFireclass = new float[]{0.5f, 0.7f, 0.5f};
+	private float[] primaryFireclass = new float[]{0.85f, 0.7f, 0.5f};                                                                                                              
+	private float[] secondaryFireclass = new float[]{0.7752f, 0.7752f, 0.5f};
 
-	public static int[] primaryMaxammo = new int[]{10, 20, 30};
-	public int[] primaryCurrentammo = new int[]{10, 20, 30};
-	public static int[] secondaryMaxammo = new int[]{12,20,50};
-	public int[] secondaryCurrentammo = new int[]{12,20,50};
+	private static int[] primaryMaxammo = new int[]{10, 20, 30};
+	private int[] primaryCurrentammo = new int[]{10, 20, 30};
+	private static int[] secondaryMaxammo = new int[]{7,10,50};
+	private int[] secondaryCurrentammo = new int[]{7,10,50};
+
+    public void Shotgun()
+    {
+        primaryWeapon = 1;
+        secondaryWeapon = 1;
+    }
+
+    public void Sniper ()
+    {
+        primaryWeapon = 2;
+        secondaryWeapon = 2;
+    }
+
+    public void Assault ()
+    {
+        primaryWeapon = 0;
+        secondaryWeapon = 0;
+    }
 
 
 	public void ChangeWeapon(){
@@ -48,6 +66,7 @@ public class Weapon : MonoBehaviour {
 				timer = 0;
 				primaryCurrentammo [primaryWeapon] -= 1;
 				print (primaryCurrentammo [primaryWeapon]);
+    			aiming.CheckHits ();
 			}
 			
 			
@@ -56,45 +75,50 @@ public class Weapon : MonoBehaviour {
 
 	void ShootSecondary(){
 		
-			if (canfire == true && primaryCurrentammo [primaryWeapon] > 0) {
+			if (canfire == true && secondaryCurrentammo [secondaryWeapon] > 0) {
 
 				print ("pum");
 				timer = 0;
 				secondaryCurrentammo [secondaryWeapon] -= 1;
 				print (secondaryCurrentammo [secondaryWeapon]);
+
+			aiming.CheckHits ();
 			}
 			
 			
 		}
 
 
-	
 
-	public void Shoot() {
+    public void Shoot()
+    {
 
-		if (selectedWeapon == 0){
-			ShootPrimary ();
+        if (selectedWeapon == 0)
+        {
+            ShootPrimary();
 
-			aiming.CheckHits ();
+            aiming.CheckHits();
 
-		}
-		else{
-			ShootSecondary ();
+        }
+        else
+        {
+            ShootSecondary();
 
-			aiming.CheckHits ();
 
+            aiming.CheckHits();
 
-		}
-	}
-
+        }
+    }
 
 
 	public void Reload(){
 		print ("reloading");
-		if (selectedWeapon == 0) {
-			
+		if (selectedWeapon == 0)
+        { 	
 			primaryCurrentammo [primaryWeapon] = primaryMaxammo [primaryWeapon];
-		} else {
+		}
+        else
+        {
 			secondaryCurrentammo [secondaryWeapon] = secondaryMaxammo [secondaryWeapon];
 		}
 	}

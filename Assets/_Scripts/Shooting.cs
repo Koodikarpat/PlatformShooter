@@ -14,7 +14,6 @@ public class Shooting : MonoBehaviour {
 		weapon = GetComponent<Weapon> (); 
 
 
-
 	} 
 	void Start ()
     {
