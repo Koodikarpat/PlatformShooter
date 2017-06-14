@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraControl : MonoBehaviour {
 
 	public float mouseSensitivity;
-
+	private bool cursorlocked;
     private float rotY = 0.0f;
     private float rotX = 0.0f;
     public GameObject vertical;
@@ -39,8 +39,16 @@ public class CameraControl : MonoBehaviour {
 
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
-			Cursor.visible = true;
-			Cursor.lockState = CursorLockMode.None;
+			if (cursorlocked == true) {
+				Cursor.visible = true;
+				Cursor.lockState = CursorLockMode.None;
+				cursorlocked = false;
+			}
+			else 
+				Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+			cursorlocked = true;
 		}
+
 	}
 }
