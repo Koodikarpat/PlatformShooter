@@ -6,7 +6,7 @@ public class LoadLevel : MonoBehaviour {
 
     public void LoadStage ()
     {
-        Application.LoadLevel("main scene");
+        Application.LoadLevel("Hahmovalikko");
     }
 
 	// Use this for initialization

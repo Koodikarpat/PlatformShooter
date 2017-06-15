@@ -17,18 +17,45 @@ public class Weapon : MonoBehaviour {
 
 
 
-	public int selectedWeapon = 0;
-	public int primaryWeapon = 0;
-	public int secondaryWeapon = 0;
+	public int selectedWeapon = 0; //onko hahmolla kädessä primary vai secondary ase.
+	public int primaryWeapon = 0; //mikä primaryase hahmolla on käytettävissä
+	public int secondaryWeapon = 0;//mikä secondaryase hahmolla on käytettävissä
 
 
-	private float[] primaryFireclass = new float[]{0.85f, 0.7f, 0.5f};                                                                                                              
+	//Latauksen kesto sekunteina. Isompi arvo=>pidempi aika
+	private float[] primaryReloadTime = new float[]{2.50f, 2.50f, 3.70f};
+	private float[] secondaryReloadTime = new float[]{2.30f, 2.90f, 2.50f};
+
+	//tulitahti on sekunteina 1 - sarjan jäsenen arvo.
+	private float[] primaryFireclass = new float[]{0.85f, 0.7f, 0.5f}; //esim 0.85f tarkoittaa 0.15sekunnin viivettä ennen seuraavaa laukausta jne.                                                                                                              
 	private float[] secondaryFireclass = new float[]{0.7752f, 0.7752f, 0.5f};
 
-	private static int[] primaryMaxammo = new int[]{10, 20, 30};
-	private int[] primaryCurrentammo = new int[]{10, 20, 30};
-	private static int[] secondaryMaxammo = new int[]{7,10,50};
-	private int[] secondaryCurrentammo = new int[]{7,10,50};
+
+	//aseen lippaaseen mahtuvien ammusten määrä
+	private static int[] primaryMaxammo = new int[]{30, 7, 5};
+	private static int[] secondaryMaxammo = new int[]{7,13,12};
+
+	//nykyinen ammusten määrä. arvo pienenee ammuttaessa ja kasvaa ladattaessa.
+	private int[] primaryCurrentammo = new int[]{30, 7, 5};
+	private int[] secondaryCurrentammo = new int[]{7,13,12};
+	
+	IEnumerator ReloadingPrimary()
+	{
+		print ("reloading");
+		yield return new WaitForSeconds (primaryReloadTime[primaryWeapon]);
+
+			primaryCurrentammo [primaryWeapon] = primaryMaxammo [primaryWeapon];
+
+	}
+
+	IEnumerator ReloadingSecondary(){
+		
+		print ("reloading");
+		yield return new WaitForSeconds (secondaryReloadTime [secondaryWeapon]);
+
+		secondaryCurrentammo [secondaryWeapon] = secondaryMaxammo [secondaryWeapon];
+
+	}
 
     public void Shotgun()
     {
@@ -36,13 +63,13 @@ public class Weapon : MonoBehaviour {
         secondaryWeapon = 1;
     }
 
-    public void Sniper ()
+    public void Sniper()
     {
         primaryWeapon = 2;
         secondaryWeapon = 2;
     }
 
-    public void Assault ()
+    public void Assault()
     {
         primaryWeapon = 0;
         secondaryWeapon = 0;
@@ -112,15 +139,15 @@ public class Weapon : MonoBehaviour {
 
 
 	public void Reload(){
-		print ("reloading");
-		if (selectedWeapon == 0)
-        { 	
-			primaryCurrentammo [primaryWeapon] = primaryMaxammo [primaryWeapon];
-		}
-        else
-        {
-			secondaryCurrentammo [secondaryWeapon] = secondaryMaxammo [secondaryWeapon];
-		}
+
+		if (selectedWeapon == 0) {
+			StartCoroutine (ReloadingPrimary ());
+		} else
+			StartCoroutine (ReloadingSecondary ());
+		
+
+
+
 	}
 
 	// Use this for initialization
