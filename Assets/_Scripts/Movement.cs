@@ -1,73 +1,62 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Hoitaa liikkumisen ja hyppimisen
 public class Movement : Photon.MonoBehaviour {
 
-	public float speed;
-	public float jumpSpeed;
-	public float gravity;
-<<<<<<< HEAD
-    public static GameObject LocalPlayerInstance;
-=======
-	public static GameObject LocalPlayerInstance;
-
->>>>>>> 871ab4894cee7e33eca6b74a2e1388d4c3d9e0e3
+	public float speed;     //Määrää pelaajan nopeuden
+	public float jumpSpeed;     //Määrää pelaajan hypyn korkeuden
+	public float gravity;       //Määrää painovoiman suuruuden
 
     private Rigidbody rb;
     public Vector3 moveDirection;
-    private bool candoublejump;
+    private bool candoublejump;     //Tarkistaa, pystyykö pelaaja tekemään tuplahypyn
 
-<<<<<<< HEAD
+
+    //Pitäisi tarkistaa moninpelissä, onko tämä hahmo tämän pelaajan. Jos ei => hahmon liikuttaminen ei ole mahdollista. Ei toimi tällä hetkellä
     void Awake()
     {
-        if(photonView.isMine)
+        if(!photonView.isMine)
         {
-            Movement.LocalPlayerInstance = this.gameObject;
+            enabled = false;
         }
         DontDestroyOnLoad(this.gameObject);
     }
 
-=======
-	void Awake(){
-		if (photonView.isMine) {
-			Movement.LocalPlayerInstance = this.gameObject;
-	
-		}
-		DontDestroyOnLoad (this.gameObject);
-	}
->>>>>>> 871ab4894cee7e33eca6b74a2e1388d4c3d9e0e3
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody>();
-	
-		}
+	}
 		
 
 		
     void Update()
 	{
-		if (photonView.isMine == false && PhotonNetwork.connected == true) {
-			return;}
-			moveDirection = new Vector3 (Input.GetAxis ("Horizontal") * speed, rb.velocity.y, Input.GetAxis ("Vertical") * speed);
-			moveDirection = transform.TransformDirection (moveDirection);
+        if (photonView.isMine)
+            {
+            //Liikkuminen
+            moveDirection = new Vector3(Input.GetAxis("Horizontal") * speed, rb.velocity.y, Input.GetAxis("Vertical") * speed);
+            moveDirection = transform.TransformDirection(moveDirection);
 
-			if (Input.GetKeyDown (KeyCode.Space))
-			if (isGrounded ()) {
-				moveDirection.y = jumpSpeed;
-				candoublejump = true;
-			} else {
-				if (candoublejump) {
-					moveDirection.y = jumpSpeed;
-					candoublejump = false;
-				}
+            //Hyppiminen
+            if (Input.GetKeyDown(KeyCode.Space))
+                if (isGrounded()) {
+                    moveDirection.y = jumpSpeed;
+                    candoublejump = true;
+                } else {
+                    if (candoublejump) {
+                        moveDirection.y = jumpSpeed;
+                        candoublejump = false;
+                    }
 
-			}
+                }
 
-			moveDirection.y -= gravity * Time.deltaTime;
-			rb.velocity = moveDirection; 
+            moveDirection.y -= gravity * Time.deltaTime;
+            rb.velocity = moveDirection;
+        }
 		}
 
-	
+	//Tarkistaa, koskettaako pelaaja maata
     bool isGrounded ()
     {
         Vector3 position = transform.position;

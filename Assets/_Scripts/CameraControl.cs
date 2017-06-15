@@ -1,22 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Hoitaa kameran ohjaamisen hiirellä
 public class CameraControl : MonoBehaviour {
 
-	public float mouseSensitivity;
-<<<<<<< HEAD
-    public bool cursorlocked;
+	public float mouseSensitivity;      //Määrää kameran liikkumisnopeuden
+    public bool cursorlocked;           //Tarkistaa, onko hiiren kursori lukittuna paikoilleen
 
-=======
-	private bool cursorlocked;
->>>>>>> 871ab4894cee7e33eca6b74a2e1388d4c3d9e0e3
     private float rotY = 0.0f;
     private float rotX = 0.0f;
-    public GameObject vertical;
+    public GameObject vertical;     //Vertical-Gameobject mahdollistaa kameran liikuttamisen pystysuorasti ilman että hahmo liikkuu sen mukana
 
 	void Start ()
 	{
-		
 		Vector3 rot = transform.localRotation.eulerAngles;
 		rotY = rot.y;
 		rotX = rot.x;
@@ -25,9 +21,9 @@ public class CameraControl : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
+    //Kameran liikuttaminen
 	void Update ()
-	{
-		
+    { 
 		float mouseX = Input.GetAxis("Mouse X");
 		float mouseY = -Input.GetAxis("Mouse Y");
 
@@ -39,7 +35,8 @@ public class CameraControl : MonoBehaviour {
         Quaternion verticalRotation = Quaternion.Euler(rotX, 0.0f, 0.0f);
         vertical.transform.localRotation = verticalRotation;
 
-<<<<<<< HEAD
+
+        //Mahdollistaa hiiren muuttamisen näkyväksi ja näkymättömäksi pelin aikana
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (cursorlocked)
@@ -54,19 +51,6 @@ public class CameraControl : MonoBehaviour {
                 Cursor.lockState = CursorLockMode.Locked;
                 cursorlocked = true;
             }
-=======
-		if(Input.GetKeyDown(KeyCode.Escape))
-		{
-			if (cursorlocked == true) {
-				Cursor.visible = true;
-				Cursor.lockState = CursorLockMode.None;
-				cursorlocked = false;
-			}
-			else 
-				Cursor.visible = false;
-			Cursor.lockState = CursorLockMode.Locked;
-			cursorlocked = true;
->>>>>>> 871ab4894cee7e33eca6b74a2e1388d4c3d9e0e3
 		}
 
 	}

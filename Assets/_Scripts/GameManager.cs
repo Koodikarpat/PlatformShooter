@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement; 
 
 
+//Hoitaa moninpelin toimintaan liittyviä asioita
 namespace Com.MyCompany.MyGame
 {
 	public class GameManager : Photon.PunBehaviour {
