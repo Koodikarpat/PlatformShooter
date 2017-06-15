@@ -30,6 +30,7 @@ public class Weapon : MonoBehaviour {
 	private float[] primaryFireclass = new float[]{0.85f, 0.7f, 0.5f}; //esim 0.85f tarkoittaa 0.15sekunnin viivettä ennen seuraavaa laukausta jne.                                                                                                              
 	private float[] secondaryFireclass = new float[]{0.7752f, 0.7752f, 0.5f};
 
+<<<<<<< HEAD
 
 	//aseen lippaaseen mahtuvien ammusten määrä
 	private static int[] primaryMaxammo = new int[]{30, 7, 5};
@@ -56,6 +57,12 @@ public class Weapon : MonoBehaviour {
 		secondaryCurrentammo [secondaryWeapon] = secondaryMaxammo [secondaryWeapon];
 
 	}
+=======
+	private static int[] primaryMaxammo = new int[]{30, 7, 5};
+	private int[] primaryCurrentammo = new int[]{30, 7, 5};
+	private static int[] secondaryMaxammo = new int[]{7,13,12};
+	private int[] secondaryCurrentammo = new int[]{7,13,12};
+>>>>>>> edca8fe4a93bcec7e639e47f95a7f908da01d4fd
 
     public void Shotgun()
     {
@@ -76,33 +83,40 @@ public class Weapon : MonoBehaviour {
     }
 
 
-	public void ChangeWeapon(){
-		if (Input.GetKeyDown (KeyCode.Alpha1)) {
+	public void ChangeWeapon()
+    {
+		if (Input.GetKeyDown (KeyCode.Alpha1))
+        {
 			selectedWeapon = 0;
 		}
-		if (Input.GetKeyDown (KeyCode.Alpha2)) {
+		if (Input.GetKeyDown (KeyCode.Alpha2))
+        {
 			selectedWeapon = 1;
 		}
 	}
 	
-	public void ShootPrimary(){
+	public void ShootPrimary()
+    {
 		
-			if (canfire == true && primaryCurrentammo [primaryWeapon] > 0) {
+			if (canfire == true && primaryCurrentammo [primaryWeapon] > 0)
+        {
 
 				print ("pum");
 				timer = 0;
 				primaryCurrentammo [primaryWeapon] -= 1;
 				print (primaryCurrentammo [primaryWeapon]);
     			aiming.CheckHits ();
-			}
+		}
 			
 			
 
 	}
 
-	void ShootSecondary(){
+	void ShootSecondary()
+    {
 		
-			if (canfire == true && secondaryCurrentammo [secondaryWeapon] > 0) {
+			if (canfire == true && secondaryCurrentammo [secondaryWeapon] > 0)
+        {
 
 				print ("pum");
 				timer = 0;
@@ -138,6 +152,7 @@ public class Weapon : MonoBehaviour {
     }
 
 
+<<<<<<< HEAD
 	public void Reload(){
 
 		if (selectedWeapon == 0) {
@@ -148,23 +163,33 @@ public class Weapon : MonoBehaviour {
 
 
 
+=======
+	public void Reload()
+    {
+		print ("reloading");
+		if (selectedWeapon == 0)
+        { 	
+			primaryCurrentammo [primaryWeapon] = primaryMaxammo [primaryWeapon];
+		}
+        else
+        {
+			secondaryCurrentammo [secondaryWeapon] = secondaryMaxammo [secondaryWeapon];
+		}
+>>>>>>> edca8fe4a93bcec7e639e47f95a7f908da01d4fd
 	}
 
-	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
 		defaultrate = 1;
 		canfire = true;
+    }
 
-
-
-	}
-
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		ChangeWeapon ();
 
-		if (selectedWeapon == 0) {
+		if (selectedWeapon == 0)
+        {
 			
 
 			firerate = defaultrate - primaryFireclass [primaryWeapon];
@@ -176,7 +201,9 @@ public class Weapon : MonoBehaviour {
 			else
 				canfire = true; 
 
-		} else {
+		}
+        else
+        {
 			firerate = defaultrate - secondaryFireclass [secondaryWeapon];
 			timer += Time.deltaTime;
 		}

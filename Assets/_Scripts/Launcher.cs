@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 
+//Hoitaa moninpeliin siirtymisen
 namespace Com.PepeStudios.SuperPepeBrawl
 {
 	public class Launcher : Photon.PunBehaviour{
@@ -113,7 +114,12 @@ namespace Com.PepeStudios.SuperPepeBrawl
 		/// </summary>
 		void Start()
 		{
+<<<<<<< HEAD
 			
+=======
+            progressLabel.SetActive(false);
+            controlPanel.SetActive(true);
+>>>>>>> edca8fe4a93bcec7e639e47f95a7f908da01d4fd
 		}
 
 
@@ -130,6 +136,7 @@ namespace Com.PepeStudios.SuperPepeBrawl
 		/// </summary>
 		public void Connect()
 		{
+<<<<<<< HEAD
 
 
             Cursor.visible = false;
@@ -141,6 +148,16 @@ namespace Com.PepeStudios.SuperPepeBrawl
 			isConnecting = true;
 
 
+=======
+            progressLabel.SetActive(true);
+            controlPanel.SetActive(false);
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+			// keep track of the will to join a room, because when we come back from the game we will get a callback that we are connected, so we need to know what to do then
+			isConnecting = true;
+
+>>>>>>> edca8fe4a93bcec7e639e47f95a7f908da01d4fd
 
 
 			// we check if we are connected or not, we join if we are , else we initiate the connection to the server.

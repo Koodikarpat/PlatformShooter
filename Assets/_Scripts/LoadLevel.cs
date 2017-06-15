@@ -4,18 +4,9 @@ using UnityEngine;
 
 public class LoadLevel : MonoBehaviour {
 
+    //Siirtyy päävalikosta hahmonvalintasceneen
     public void LoadStage ()
     {
         Application.LoadLevel("Hahmovalikko");
     }
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

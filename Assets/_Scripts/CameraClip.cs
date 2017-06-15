@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Hoitaa, että kamera ei mene lattian tai seinien läpi
 class CameraClip : MonoBehaviour {
 
 	private float minimumDistance;
 	private float maximumDistance;
-    public float speedToFixClipping;
+    public float speedToFixClipping;        //Aika, jossa kameran paikka muuttuu
 	public bool scoped = false;
     private Vector3 normalDistance;
 	public Texture2D scope;
 
-
+    //Tarkistaa kameran nykyisen paikan
 	public void DefinePosition()
 	{
 		transform.localPosition = normalDistance;
@@ -30,19 +31,20 @@ class CameraClip : MonoBehaviour {
     void Update ()
     {
 		float currentDistance = normalDistance.z;
-		if (Input.GetKeyDown (KeyCode.Mouse1) && !scoped) {
+        
+        //Mahdollistaa kameran zoomauksen
+		if (Input.GetKeyDown (KeyCode.Mouse1) && !scoped)
+        {
 			currentDistance = 0;
 			scoped = true;
-
-		
-
-		} else if( Input.GetKeyDown (KeyCode.Mouse1) && scoped) {
+        }
+        else if( Input.GetKeyDown (KeyCode.Mouse1) && scoped)
+        {
 			currentDistance = maximumDistance;
 			scoped = false;
-
-		 
-		}
-			
+        }
+		
+        //Muuttaa kameran paikan lähemmäksi pelaajaa, jos kameran ja pelaajan väliin tulee esim. lattia tai seinä. Siirtää myös kameran takaisin alkuperäiselle paikalleen, kun este häviää	
 		transform.localPosition = normalDistance;
         Vector3 position = transform.position;
         Vector3 scopePosition = transform.parent.position + Vector3.up;

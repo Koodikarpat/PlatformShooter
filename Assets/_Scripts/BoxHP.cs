@@ -3,27 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Hoitaa testitarkoituksessa käytettyjen laatikkojen hp:n tarkkailusta
 public class BoxHP : MonoBehaviour {
 	public float hp = 100;
     public GameObject healthTextObject;
     Text healthText;
 
-	public void TakeDamage(){
+	public void TakeDamage()
+    {
 		hp -= 10;
 	}
-	// Use this for initialization
-	void Start () {
+
+	void Start ()
+    {
         healthText = healthTextObject.GetComponent<Text>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void Update ()
+    {
 
 
-			if (hp <= 0) {
+			if (hp <= 0)
+            {
 				transform.position = new Vector3(5f, 0.5f, 7f);
 				hp = 100;
-			print ("dead");
+			    print ("dead");
 			}
 
         healthText.text = hp.ToString();
