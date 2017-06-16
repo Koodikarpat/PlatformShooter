@@ -7,9 +7,8 @@ class CameraClip : MonoBehaviour {
 	private float minimumDistance;
 	private float maximumDistance;
     public float speedToFixClipping;        //Aika, jossa kameran paikka muuttuu
-	public bool scoped = false;
-    private Vector3 normalDistance;
-	public Texture2D scope;
+	public bool scoped = false;         //Onko kamera zoomattuna vai ei
+    private Vector3 normalDistance;     //Paikka, jossa kamera normaalisti on
 
     //Tarkistaa kameran nykyisen paikan
 	public void DefinePosition()

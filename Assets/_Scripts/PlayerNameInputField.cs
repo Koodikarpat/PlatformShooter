@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 using System.Collections;
 
-
+//Nimi-imputin toimiminen aloitusruudussa
 namespace Com.MyCompany.MyGame
 {
 	/// <summary>

@@ -3,23 +3,7 @@ using System.Collections;
 
 //Hoitaa liikkumisen ja hyppimisen
 public class Movement : Photon.MonoBehaviour {
-
-<<<<<<< HEAD
-	public float speed;
-	public float jumpSpeed;
-	public float gravity;
-
-    public static GameObject LocalPlayerInstance;
-
-
-
-
-
-    private Rigidbody rb;
-    public Vector3 moveDirection;
-    private bool candoublejump;
 	 
-=======
 	public float speed;     //Määrää pelaajan nopeuden
 	public float jumpSpeed;     //Määrää pelaajan hypyn korkeuden
 	public float gravity;       //Määrää painovoiman suuruuden
@@ -30,7 +14,6 @@ public class Movement : Photon.MonoBehaviour {
 
 
     //Pitäisi tarkistaa moninpelissä, onko tämä hahmo tämän pelaajan. Jos ei => hahmon liikuttaminen ei ole mahdollista. Ei toimi tällä hetkellä
->>>>>>> edca8fe4a93bcec7e639e47f95a7f908da01d4fd
     void Awake()
     {
         if(!photonView.isMine)
@@ -40,10 +23,6 @@ public class Movement : Photon.MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> edca8fe4a93bcec7e639e47f95a7f908da01d4fd
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -53,17 +32,11 @@ public class Movement : Photon.MonoBehaviour {
 		
     void Update()
 	{
-<<<<<<< HEAD
-		if (photonView.isMine) {
-			moveDirection = new Vector3 (Input.GetAxis ("Horizontal") * speed, rb.velocity.y, Input.GetAxis ("Vertical") * speed);
-			moveDirection = transform.TransformDirection (moveDirection);
-=======
         if (photonView.isMine)
             {
             //Liikkuminen
             moveDirection = new Vector3(Input.GetAxis("Horizontal") * speed, rb.velocity.y, Input.GetAxis("Vertical") * speed);
             moveDirection = transform.TransformDirection(moveDirection);
->>>>>>> edca8fe4a93bcec7e639e47f95a7f908da01d4fd
 
             //Hyppiminen
             if (Input.GetKeyDown(KeyCode.Space))
@@ -82,7 +55,6 @@ public class Movement : Photon.MonoBehaviour {
             rb.velocity = moveDirection;
         }
 		}
-	}
 
 	//Tarkistaa, koskettaako pelaaja maata
     bool isGrounded ()
