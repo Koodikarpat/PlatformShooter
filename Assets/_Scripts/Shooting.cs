@@ -21,6 +21,11 @@ public class Shooting : MonoBehaviour {
 
 			}
 
+            if (Input.GetKeyDown (KeyCode.F))
+        {
+            weapon.Stab();
+        }
+
 		if (Input.GetKeyDown (KeyCode.R))
 			weapon.Reload ();
 			}

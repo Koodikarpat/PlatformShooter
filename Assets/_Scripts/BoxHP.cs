@@ -14,6 +14,11 @@ public class BoxHP : MonoBehaviour {
 		hp -= 10;
 	}
 
+    public void StabDamage()
+    {
+        hp -= 15;
+    }
+
 	void Start ()
     {
         healthText = healthTextObject.GetComponent<Text>();

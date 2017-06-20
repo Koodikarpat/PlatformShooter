@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class DoorOpen : MonoBehaviour {
 
-    public float smooth;
-    public float DoorOpenAngle;
-    public float DoorCloseAngle;
-    private bool open;
-    private bool enter;
+    public float smooth;        //Määrää oven avautumisnopeuden
+    public float DoorOpenAngle;     //Oven kulma, kun se on auki
+    public float DoorCloseAngle;        //Oven kulma, kun se on kiinni
+    private bool open;      //Tarkistaa, onko ovi avattu
+    private bool enter;     //Tarkistaa, pystyykö pelaaaja avaamaan tai sulkemaan oven
 
 	void Update ()
     {
+        //Oven avaaminen ja sulkeminen
         if (open == true)
         {
             Quaternion target = Quaternion.Euler(0, DoorOpenAngle, 0);
@@ -33,6 +34,7 @@ public class DoorOpen : MonoBehaviour {
         }
 	}
 
+    //Tarkistavat, onko pelaaja tarpeeksi lähellä ovea, jotta sen voi avata
     void OnTriggerEnter (Collider other)
     {
         if (other.gameObject.tag == "Player")

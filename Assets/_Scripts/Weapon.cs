@@ -99,7 +99,6 @@ public class Weapon : MonoBehaviour
     //Ampuu primary aseella
     public void ShootPrimary()
     {
-
         if (canfire == true && primaryCurrentammo[primaryWeapon] > 0 && !reloading)
         {
             muzzleFlash.Play();
@@ -140,18 +139,17 @@ public class Weapon : MonoBehaviour
         if (selectedWeapon == 0)
         {
             ShootPrimary();
-
-            aiming.CheckHits();
-
         }
         else
         {
             ShootSecondary();
-
-
-            aiming.CheckHits();
-
         }
+    }
+
+    //Puukottaa
+    public void Stab()
+    {
+        aiming.KnifeCheckHits();
     }
 
 
