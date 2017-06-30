@@ -8,7 +8,8 @@ public class Aiming : MonoBehaviour {
     private int shotgunPellets = 7;
     private Vector3 localOffset;
 
-	public void CheckHits(){
+	public void CheckHits()
+    {
 		Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
 		boxihp = GameObject.Find ("Enemy").GetComponent<BoxHP> ();
             if (Physics.Raycast(transform.position, forward, 100, LayerMask.GetMask("Player")))
@@ -16,7 +17,7 @@ public class Aiming : MonoBehaviour {
                 print("Hit!");
                 boxihp.TakeDamage();
             }
-        }
+    }
 
     public void KnifeCheckHits()
     {
@@ -28,4 +29,4 @@ public class Aiming : MonoBehaviour {
             boxihp.StabDamage();
         }
     }
-    }
+}

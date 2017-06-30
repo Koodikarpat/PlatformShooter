@@ -4,31 +4,20 @@ using System.Collections;
 //Kutsuu Weapon-scriptin funktioita
 public class Shooting : MonoBehaviour {
 	
+	public BaseWeapon weapon;
 
-
-
-	private Weapon weapon;
-
-	void Awake(){
-		weapon = GetComponent<Weapon> (); 
-
-
-	} 
-	void Update ()
+    void Update()
     {
-			if (Input.GetKeyDown (KeyCode.Mouse0)){
-			weapon.Shoot ();
-
-			}
-
-            if (Input.GetKeyDown (KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            weapon.Stab();
+            weapon.Fire();
         }
 
-		if (Input.GetKeyDown (KeyCode.R))
-			weapon.Reload ();
-			}
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            weapon.Reload();
+        }
+    }
 
 }
 

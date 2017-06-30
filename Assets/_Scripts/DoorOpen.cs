@@ -37,6 +37,7 @@ public class DoorOpen : MonoBehaviour {
     //Tarkistavat, onko pelaaja tarpeeksi lähellä ovea, jotta sen voi avata
     void OnTriggerEnter (Collider other)
     {
+        
         if (other.gameObject.tag == "Player")
         {
             enter = true;

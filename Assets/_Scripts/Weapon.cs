@@ -102,11 +102,11 @@ public class Weapon : MonoBehaviour
         if (canfire == true && primaryCurrentammo[primaryWeapon] > 0 && !reloading)
         {
             muzzleFlash.Play();
-            print("pum");
             timer = 0;
             primaryCurrentammo[primaryWeapon] -= 1;
             print(primaryCurrentammo[primaryWeapon]);
             aiming.CheckHits();
+
         }
 
 
@@ -120,7 +120,6 @@ public class Weapon : MonoBehaviour
         if (canfire == true && secondaryCurrentammo[secondaryWeapon] > 0 && !reloading)
         {
             muzzleFlash.Play();
-            print("pum");
             timer = 0;
             secondaryCurrentammo[secondaryWeapon] -= 1;
             print(secondaryCurrentammo[secondaryWeapon]);

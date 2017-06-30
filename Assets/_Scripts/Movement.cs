@@ -18,9 +18,9 @@ public class Movement : Photon.MonoBehaviour {
     //Pitäisi tarkistaa moninpelissä, onko tämä hahmo tämän pelaajan. Jos ei => hahmon liikuttaminen ei ole mahdollista. Ei toimi tällä hetkellä
     void Awake()
     {
-        if(!photonView.isMine)
+       // if(!photonView.isMine)
         {
-            enabled = false;
+           // enabled = false;
         }
         DontDestroyOnLoad(this.gameObject);
     }

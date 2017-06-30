@@ -53,10 +53,5 @@ public class CameraControl : MonoBehaviour {
                 cursorlocked = true;
             }
 		}
-
 	}
-
-
-
-
 }
