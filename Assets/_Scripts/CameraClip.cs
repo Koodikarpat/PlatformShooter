@@ -54,8 +54,8 @@ class CameraClip : MonoBehaviour {
 		  
 		
         if (obstructed)
-        {
-            transform.position = hit.point;
+		{
+			transform.position = hit.point;
         }
        
         normalDistance = new Vector3(transform.localPosition.x, transform.localPosition.y, currentDistance);
