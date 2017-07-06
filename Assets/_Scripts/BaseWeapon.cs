@@ -13,8 +13,21 @@ public class BaseWeapon : MonoBehaviour
     public float reloadTime;
     public int maxAmmo;
     public int currentAmmo;
+	public AudioSource reloadSound;
 
-    public void CheckHits()
+	public AudioSource gunAudio;						//shooting sound
+	public WaitForSeconds tracerLifetime = new WaitForSeconds(0.07f);		//how long bullet tracer will be visible
+	public Transform gunEnd;		//end of the gun, where the tracer comes from
+	public float weaponRange;
+
+	public Camera mainCamera;
+	public LineRenderer bulletTracer;   //private????
+
+	private float vx;
+	private float vy;
+	private float vz = 1.0f;
+    
+	public void CheckHits()
     {
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
        /* Boxhp = GameObject.Find("Enemy").GetComponent<BoxHP>();
@@ -33,21 +46,39 @@ public class BaseWeapon : MonoBehaviour
     {
         reloading = true;
         Debug.Log("Reload");
+		reloadSound.Play ();
 
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
         reloading = false;
+		Debug.Log ("Reloaded");
     }
     public virtual void Fire()
     {
-        if (canFire == true && currentAmmo > 0 && !reloading)
+		Debug.Log (canFire + " " + reloading + " " + currentAmmo);
+		if (canFire == true && currentAmmo > 0 && !reloading)
         {
+			Debug.Log ("Fire() toimii?");
             muzzleFlash.Play();
             timer = 0;
             currentAmmo -= 1;
             print(currentAmmo);
             CheckHits();
+			StartCoroutine (ShotEffect());
+			Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
+			RaycastHit hit;
+
+			bulletTracer.SetPosition (0, gunEnd.position);
+
+			if (Physics.Raycast (rayOrigin, mainCamera.transform.forward, out hit, weaponRange)) {
+				bulletTracer.SetPosition (1, hit.point);	
+			} 
+
+			else 
+			{
+				bulletTracer.SetPosition(1, rayOrigin + (mainCamera.transform.forward * weaponRange));
+			}
 
         }
     }
@@ -55,12 +86,29 @@ public class BaseWeapon : MonoBehaviour
     void Start()
     {
         canFire = true;
-        currentAmmo = maxAmmo;
+        currentAmmo = maxAmmo; 
+		//mainCamera = GetComponentInParent<Camera> ();
     }
 
     void Update()
     {
         timer += Time.deltaTime;
         canFire = timer > firerate;
+		Debug.Log (mainCamera);
     }
+
+	public IEnumerator ShotEffect()
+	{
+		Debug.Log ("ShotEffect toimii?");
+		gunAudio.Play ();
+		bulletTracer.enabled = true;
+		yield return tracerLifetime;
+		bulletTracer.enabled = false;
+	}
+
+	void SprayAndPray() 
+	{
+		
+	}
+
 }

@@ -9,6 +9,9 @@ public class CameraControl : MonoBehaviour {
 	public float mouseSensitivity;      //Määrää kameran liikkumisnopeuden
     public bool cursorlocked;           //Tarkistaa, onko hiiren kursori lukittuna paikoilleen
 
+	public float maxXAngle = 90f;
+	public float minXAngle = -45f;
+
     private float rotY = 0.0f;
     private float rotX = 0.0f;
     public GameObject vertical;     //Vertical-Gameobject mahdollistaa kameran liikuttamisen pystysuorasti ilman että hahmo liikkuu sen mukana
@@ -31,7 +34,7 @@ public class CameraControl : MonoBehaviour {
 
 		rotY += mouseX * mouseSensitivity * Time.deltaTime;
 		rotX += mouseY * mouseSensitivity * Time.deltaTime;
-
+		rotX = Mathf.Clamp (rotX, minXAngle, maxXAngle);// rajoittaa kameran liikkeen ylös/alas
 		Quaternion horizontalRotation = Quaternion.Euler (0.0f, rotY, 0.0f);
 		transform.rotation = horizontalRotation;
 		Quaternion verticalRotation = Quaternion.Euler (rotX, 0.0f, 0.0f);
