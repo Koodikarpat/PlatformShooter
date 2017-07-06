@@ -48,40 +48,40 @@ public class BaseWeapon : MonoBehaviour
     private IEnumerator ReloadThread()
     {
         reloading = true;
-        Debug.Log("Reload");
-		reloadSound.Play ();
+        //Debug.Log("Reload");
+		if (reloadSound != null) reloadSound.Play ();
 
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
         reloading = false;
-		Debug.Log ("Reloaded");
+		//Debug.Log ("Reloaded");
     }
     public virtual void Fire()
     {
-		Debug.Log (canFire + " " + reloading + " " + currentAmmo);
+		//Debug.Log (canFire + " " + reloading + " " + currentAmmo);
 		if (canFire == true && currentAmmo > 0 && !reloading)
         {
-			Debug.Log ("Fire() toimii?");
             muzzleFlash.Play();
             timer = 0;
             currentAmmo -= 1;
-            print(currentAmmo);
+            //print(currentAmmo);
             CheckHits();
 			StartCoroutine (ShotEffect());
-			Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
+            Vector3 rayOrigin;
+            if (mainCamera != null) rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
 			RaycastHit hit;
 
-			bulletTracer.SetPosition (0, gunEnd.position);
+            if (bulletTracer != null) bulletTracer.SetPosition (0, gunEnd.position);
 
-			if (Physics.Raycast (rayOrigin, mainCamera.transform.forward, out hit, weaponRange)) {
-				bulletTracer.SetPosition (1, hit.point);	
-			} 
+			//if (Physics.Raycast (rayOrigin, mainCamera.transform.forward, out hit, weaponRange)) {
+   //             if (bulletTracer != null) bulletTracer.SetPosition (1, hit.point);	
+			//} 
 
-			else 
-			{
-				bulletTracer.SetPosition(1, rayOrigin + (mainCamera.transform.forward * weaponRange));
-			}
+			//else 
+			//{
+   //             if (bulletTracer != null) bulletTracer.SetPosition(1, rayOrigin + (mainCamera.transform.forward * weaponRange));
+			//}
 
         }
     }
@@ -97,16 +97,14 @@ public class BaseWeapon : MonoBehaviour
     {
         timer += Time.deltaTime;
         canFire = timer > firerate;
-		Debug.Log (mainCamera);
     }
 
 	public IEnumerator ShotEffect()
 	{
-		Debug.Log ("ShotEffect toimii?");
-		gunAudio.Play ();
-		bulletTracer.enabled = true;
+        if (gunAudio != null) gunAudio.Play();
+        if (bulletTracer != null) bulletTracer.enabled = true;
 		yield return tracerLifetime;
-		bulletTracer.enabled = false;
+        if (bulletTracer != null) bulletTracer.enabled = false;
 	}
 
 	void SprayAndPray() 

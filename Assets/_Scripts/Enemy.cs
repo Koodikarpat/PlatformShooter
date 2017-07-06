@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour {
 
-    public float turnSpeed;                 //vihollisen liikkeen nopeus
+    public float turnSpeed;             //vihollisen liikkeen nopeus
     public float gravity;               //painovoima
     public int scanDensity;             //skannaustiheys
     public float scanRange;             //kuinka kauas vihollinen skannaa
@@ -19,7 +19,9 @@ public class Enemy : MonoBehaviour {
     bool destinationSet;                //onko vihollisella määränpää
     public float stoppingDistance;      //kuinka lähelle kohdetta vihollinen menee
     ShootingAI shootingAI;              //vihollisen ampumis scripti
-    public bool inCombat;                      //onko vihollinen taistelemassa
+    public bool inCombat;               //onko vihollinen taistelemassa
+    bool turning;                       //kääntyy kohdetta päin
+    Quaternion rotationToTarget;              //kääntyy tähän suuntaan
 
     //tsekkaa jos näkyy pelaajia
     void ScanPlayers()
@@ -52,14 +54,16 @@ public class Enemy : MonoBehaviour {
     {
         agent.destination = targetPos;
         destinationSet = true;
+        turning = false;
     }
 
-    //EI TOIMI VIELÄ
-    void TurnTowards(GameObject target)
+    void SetRotation()
     {
-        Vector3 vec = Vector3.forward;
-        float step = turnSpeed * Time.deltaTime;
-        Vector3.RotateTowards(vec, target.transform.position, step, 0);
+        if (currentTarget == null) return;
+        Vector3 lookPos = currentTarget.transform.position - transform.position;
+        rotationToTarget = Quaternion.LookRotation(lookPos);
+        rotationToTarget.x = rotationToTarget.z = 0;
+        turning = true;
     }
 
     // Use this for initialization
@@ -84,48 +88,65 @@ public class Enemy : MonoBehaviour {
             if (currentTarget != null)
             {
                 inCombat = true;
+                SetRotation();
             }
         }
 
+        if (turning)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotationToTarget, Time.deltaTime * turnSpeed);
+        }
+
+        //pysähtyy jos on taistelussa
         if (inCombat) agent.isStopped = true;
         else agent.isStopped = false;
 
-        if (currentTarget == null && !destinationSet)
+        if (currentTarget == null)
         {
-            int x = Random.Range(0, 100);
-            int z = Random.Range(0, 150);
-            Vector3 vec = new Vector3(x, transform.position.y, z);
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(vec, out hit, 20f, 1))
+            turning = false;
+
+            //valitsee kentältä satunnaisen kohteen
+            if (!destinationSet)
             {
-                SetRoute(hit.position);
+                int x = Random.Range(0, 100);
+                int z = Random.Range(0, 150);
+                Vector3 vec = new Vector3(x, transform.position.y, z);
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(vec, out hit, 20f, 1))
+                {
+                    SetRoute(hit.position);
+                }
+            }
+        }
+        else
+        {
+            //jos kohde liikkuu, skannaa kohteet uudestaan
+            if (currentTarget.transform.position != targetPosition)
+            {
+                ScanPlayers();
+                SetRotation();
             }
         }
 
-        //tarkasta ympäristö tietyin väliajoin
+        //jos vihiollisella on target, pysähtyy ampumaetäisyydelle
+        if (currentTarget != null && stoppingDistance != shootingAI.range)
+        {
+            stoppingDistance = shootingAI.range; //pysähtyy oikeasti vähän lähemmäksi kuin aseen kantama
+            agent.stoppingDistance = stoppingDistance;
+        }
+        else if (currentTarget == null)
+        {
+            stoppingDistance = 0;
+            agent.stoppingDistance = stoppingDistance;
+        }
+
+        //tarkasta ympäristö tietyin väliajoin tai kun kohde menee rangen ulkopuolelle
         if ((currentTarget == null && time >= scanFrequency) ||
             (currentTarget != null && (currentTarget.transform.position - transform.position).magnitude >= stoppingDistance))
         {
             ScanPlayers();
             time = 0;
             inCombat = false;
-        }
-
-        //jos kohde liikkuu, skannaa kohteet uudestaan
-        if (currentTarget != null && currentTarget.transform.position != targetPosition)
-        {
-            ScanPlayers();
-        }
-
-        if (currentTarget != null && stoppingDistance != shootingAI.range)
-        {
-            stoppingDistance = shootingAI.range; //pysähtyy oikeasti vähän lähemmäksi kuin aseen kantama
-            agent.stoppingDistance = stoppingDistance;
-        }
-        else
-        {
-            stoppingDistance = 0;
-            agent.stoppingDistance = stoppingDistance;
         }
 	}
 }

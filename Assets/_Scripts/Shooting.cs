@@ -22,7 +22,7 @@ public class Shooting : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-			Debug.Log (currentWeapon);
+			//Debug.Log (currentWeapon);
 			currentWeapon.Fire();
         }
 
