@@ -5,15 +5,17 @@ using UnityEngine;
 public class BaseWeapon : MonoBehaviour
 {
 
-    public ParticleSystem muzzleFlash;
-    public float firerate;
-    public float timer;
-    public bool canFire;
-    public bool reloading = false;
-    public float reloadTime;
-    public int maxAmmo;
-    public int currentAmmo;
+	public ParticleSystem muzzleFlash;
+	public float firerate;
+	public float timer;
+	public bool canFire;
+	public bool reloading = false;
+	public float reloadTime;
+	public int maxAmmo;
+	public int currentAmmo;
 	public AudioSource reloadSound;
+	public float range;
+
 
 	public AudioSource gunAudio;						//shooting sound
 	public WaitForSeconds tracerLifetime = new WaitForSeconds(0.07f);		//how long bullet tracer will be visible
@@ -29,7 +31,8 @@ public class BaseWeapon : MonoBehaviour
     
 	public void CheckHits()
     {
-        Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
+        Vector3 forward = transform.TransformDirection(Vector3.forward) * range;
+        Debug.DrawRay(transform.position, forward, Color.red, 5f);
        /* Boxhp = GameObject.Find("Enemy").GetComponent<BoxHP>();
         if (Physics.Raycast(transform.position, forward, 200, LayerMask.GetMask("Player")))
         {
