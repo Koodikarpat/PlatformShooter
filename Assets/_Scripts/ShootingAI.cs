@@ -29,7 +29,8 @@ public class ShootingAI : MonoBehaviour {
         {
             if (time >= fireRate)
             {
-                weapon.Fire();
+                Vector3 direction = weapon.transform.TransformDirection(Vector3.forward) * range;
+                weapon.Fire(direction);
                 time = 0;
             }
             if (weapon.currentAmmo == 0)

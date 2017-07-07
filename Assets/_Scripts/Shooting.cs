@@ -9,6 +9,7 @@ public class Shooting : MonoBehaviour {
 	BaseWeapon currentWeapon;
 	public float MaxSpread = 0.3f;
 	public float MinSpread = 0.1f;
+    public GameObject camera;
 
 	void Start () {
 	
@@ -22,8 +23,8 @@ public class Shooting : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-			//Debug.Log (currentWeapon);
-			currentWeapon.Fire();
+            Vector3 direction = camera.transform.TransformDirection(Vector3.forward) * currentWeapon.range;
+            currentWeapon.Fire(direction);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
