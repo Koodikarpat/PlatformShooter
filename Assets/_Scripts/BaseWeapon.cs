@@ -100,7 +100,7 @@ public class BaseWeapon : MonoBehaviour
     {
         timer += Time.deltaTime;
         canFire = timer > firerate;
-		Debug.Log (mainCamera);
+		//Debug.Log (mainCamera);
 		GameObject.Find ("Player/CrosshairCanvas/BulletCount").GetComponent<Text>().text = currentAmmo + "/" + maxAmmo + "    ";
     }
 
