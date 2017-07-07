@@ -35,7 +35,7 @@ public class BoxHP : MonoBehaviour {
 			    print ("dead");
 			}
 
-        healthText.text = hp.ToString();
+        healthText.text = "HP:" + hp.ToString();
 		}
 	}
 
