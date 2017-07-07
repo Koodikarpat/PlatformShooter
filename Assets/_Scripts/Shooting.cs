@@ -21,10 +21,11 @@ public class Shooting : MonoBehaviour {
 
     void Update()
     {
+        //AMPUMISEN RANGE EI TOIMI VIELÄ KUNNOLLA KOSKA ETÄISYYS KAMERASTA KOHTEESEEN ON PIDEMPI KUIN ASEESTA
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Vector3 direction = camera.transform.TransformDirection(Vector3.forward) * currentWeapon.range;
-            currentWeapon.Fire(direction);
+            currentWeapon.Fire(camera.transform.position, direction);
         }
 
         if (Input.GetKeyDown(KeyCode.R))

@@ -29,15 +29,15 @@ public class BaseWeapon : MonoBehaviour
 	private float vy;
 	private float vz = 1.0f;
     
-	public void CheckHits(Vector3 direction)
+	public void CheckHits(Vector3 origin, Vector3 direction)
     {
         Vector3 tempPos = transform.position - transform.right * 0.3f; //jostain syystä pistoolin model ei oo keskellä transformia
-        Debug.DrawRay(tempPos, direction, Color.red, 5f);
+        Debug.DrawRay(tempPos, direction, Color.red, 2f);
+        Debug.DrawRay(origin, direction, Color.green, 2f);
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit, range))
+        if (Physics.Raycast(origin, direction, out hit, range))
         {
             if (hit.transform.gameObject.layer == gameObject.layer || (hit.transform.gameObject.layer != 8 && hit.transform.gameObject.layer != 9)) return;
-            Debug.Log(hit.transform.name);
             hit.transform.gameObject.GetComponent<BoxHP>().TakeDamage(damage);
         }
     }
@@ -58,7 +58,7 @@ public class BaseWeapon : MonoBehaviour
         reloading = false;
 		//Debug.Log ("Reloaded");
     }
-    public virtual void Fire(Vector3 direction)
+    public virtual void Fire(Vector3 origin, Vector3 direction)
     {
 		//Debug.Log (canFire + " " + reloading + " " + currentAmmo);
 		if (canFire == true && currentAmmo > 0 && !reloading)
@@ -67,7 +67,7 @@ public class BaseWeapon : MonoBehaviour
             timer = 0;
             currentAmmo -= 1;
             //print(currentAmmo);
-            CheckHits(direction);
+            CheckHits(origin, direction);
 			StartCoroutine (ShotEffect());
             Vector3 rayOrigin;
             if (mainCamera != null) rayOrigin = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));

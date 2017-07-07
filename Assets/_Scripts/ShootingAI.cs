@@ -38,7 +38,7 @@ public class ShootingAI : MonoBehaviour {
             }
             if (time >= fireRate + reflexDelay && readyToShoot)
             {
-                weapon.Fire(direction);
+                weapon.Fire(weapon.transform.position, direction);
                 time = 0;
                 readyToShoot = false;
             }
