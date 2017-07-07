@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour {
             vec = vec.normalized;
             Ray ray = new Ray(transform.position, vec);
 
-            if (Physics.Raycast(ray, out hit, scanRange, scanLayer)) //raycastaa ympäristöä, osuu ainoastaan movement layerin objekteihin
+            if (Physics.Raycast(ray, out hit, scanRange)) //raycastaa ympäristöä, osuu ainoastaan movement layerin objekteihin
             {
                 if (hit.transform.name == "Player") //jos osuu pelaajaan, aseta se kohteeksi
                 {
