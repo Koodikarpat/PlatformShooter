@@ -35,12 +35,10 @@ public class BaseWeapon : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward) * range;
         Vector3 tempPos = transform.position - transform.right * 0.3f; //jostain syystä pistoolin model ei oo keskellä transformia
         Debug.DrawRay(tempPos, forward, Color.red, 5f);
-       /* Boxhp = GameObject.Find("Enemy").GetComponent<BoxHP>();
         if (Physics.Raycast(transform.position, forward, 200, LayerMask.GetMask("Player")))
         {
-            Debug.Log("Hit");
-            Boxhp.TakeDamage();
-        }*/
+
+        }
     }
 
     public virtual void Reload()
@@ -71,19 +69,21 @@ public class BaseWeapon : MonoBehaviour
             CheckHits();
 			StartCoroutine (ShotEffect());
             Vector3 rayOrigin;
-            if (mainCamera != null) rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
+            if (mainCamera != null) rayOrigin = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+            else rayOrigin = transform.position;
 			RaycastHit hit;
 
             if (bulletTracer != null) bulletTracer.SetPosition (0, gunEnd.position);
 
-			//if (Physics.Raycast (rayOrigin, mainCamera.transform.forward, out hit, weaponRange)) {
-   //             if (bulletTracer != null) bulletTracer.SetPosition (1, hit.point);	
-			//} 
+            //if (Physics.Raycast(rayOrigin, mainCamera.transform.forward, out hit, weaponRange))
+            //{
+            //    if (bulletTracer != null) bulletTracer.SetPosition(1, hit.point);
+            //}
 
-			//else 
-			//{
-   //             if (bulletTracer != null) bulletTracer.SetPosition(1, rayOrigin + (mainCamera.transform.forward * weaponRange));
-			//}
+            //else
+            //{
+            //    if (bulletTracer != null) bulletTracer.SetPosition(1, rayOrigin + (mainCamera.transform.forward * weaponRange));
+            //}
 
         }
     }
