@@ -20,11 +20,12 @@ public class Shooting : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+		if (Input.GetKeyDown(KeyCode.Mouse0) || (Input.GetKey(KeyCode.Mouse0) && currentWeapon.automaticRifle))
         {
 			//Debug.Log (currentWeapon);
 			currentWeapon.Fire();
         }
+			
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -50,5 +51,3 @@ public class Shooting : MonoBehaviour {
     }
 
 }
-
-
