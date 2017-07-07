@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseWeapon : MonoBehaviour
 {
@@ -99,6 +100,8 @@ public class BaseWeapon : MonoBehaviour
     {
         timer += Time.deltaTime;
         canFire = timer > firerate;
+		Debug.Log (mainCamera);
+		GameObject.Find ("Player/CrosshairCanvas/BulletCount").GetComponent<Text>().text = currentAmmo + "/" + maxAmmo + "    ";
     }
 
 	public IEnumerator ShotEffect()
