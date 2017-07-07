@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Knife : BaseWeapon
 {
-
-
     public BoxHP boxihp;
 
     public override void Fire()
@@ -19,7 +17,7 @@ public class Knife : BaseWeapon
             if (Physics.Raycast(transform.position, forward, 7, LayerMask.GetMask("Player")))
             {
                 Debug.Log("Stab!");
-                boxihp.StabDamage();
+                boxihp.TakeDamage(damage);
             }
             timer = 0;
         }

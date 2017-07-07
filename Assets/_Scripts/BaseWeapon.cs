@@ -6,6 +6,7 @@ public class BaseWeapon : MonoBehaviour
 {
 
 	public ParticleSystem muzzleFlash;
+    public int damage;
 	public float firerate;
 	public float timer;
 	public bool canFire;
@@ -32,7 +33,8 @@ public class BaseWeapon : MonoBehaviour
 	public void CheckHits()
     {
         Vector3 forward = transform.TransformDirection(Vector3.forward) * range;
-        Debug.DrawRay(transform.position, forward, Color.red, 5f);
+        Vector3 tempPos = transform.position - transform.right * 0.3f; //jostain syystä pistoolin model ei oo keskellä transformia
+        Debug.DrawRay(tempPos, forward, Color.red, 5f);
        /* Boxhp = GameObject.Find("Enemy").GetComponent<BoxHP>();
         if (Physics.Raycast(transform.position, forward, 200, LayerMask.GetMask("Player")))
         {

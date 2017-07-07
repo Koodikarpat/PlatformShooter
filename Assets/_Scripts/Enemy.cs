@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour {
     ShootingAI shootingAI;              //vihollisen ampumis scripti
     public bool inCombat;               //onko vihollinen taistelemassa
     bool turning;                       //kääntyy kohdetta päin
-    Quaternion rotationToTarget;              //kääntyy tähän suuntaan
+    Quaternion rotationToTarget;        //kääntyy tähän suuntaan
 
     //tsekkaa jos näkyy pelaajia
     void ScanPlayers()
@@ -61,6 +61,7 @@ public class Enemy : MonoBehaviour {
     {
         if (currentTarget == null) return;
         Vector3 lookPos = currentTarget.transform.position - transform.position;
+        lookPos -= transform.right * 0.7f; //tähtää vähän ohi että koska ase ei ole keskellä viholista
         rotationToTarget = Quaternion.LookRotation(lookPos);
         rotationToTarget.x = rotationToTarget.z = 0;
         turning = true;

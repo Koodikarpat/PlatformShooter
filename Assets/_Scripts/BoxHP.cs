@@ -9,15 +9,15 @@ public class BoxHP : MonoBehaviour {
     public GameObject healthTextObject;
     Text healthText;
 
-	public void TakeDamage()
+	public void TakeDamage(int damage)
     {
-		hp -= 10;
+		hp -= damage;
 	}
 
-    public void StabDamage()
-    {
-        hp -= 15;
-    }
+    //public void StabDamage()
+    //{
+    //    hp -= 15;
+    //}
 
 	void Start ()
     {
@@ -26,14 +26,12 @@ public class BoxHP : MonoBehaviour {
 
 	void Update ()
     {
-
-
-			if (hp <= 0)
-            {
-				transform.position = new Vector3(5f, 0.5f, 7f);
-				hp = 100;
-			    print ("dead");
-			}
+		if (hp <= 0)
+        {
+			transform.position = new Vector3(5f, 0.5f, 7f);
+			hp = 100;
+			print ("dead");
+		}
 
         healthText.text = hp.ToString();
 		}
