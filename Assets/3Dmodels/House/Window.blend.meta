@@ -8,14 +8,24 @@ ModelImporter:
     100000: Empty
     100002: Frame
     100004: //RootNode
+    100006: Meter
+    100008: Thingies
     400000: Empty
     400002: Frame
     400004: //RootNode
+    400006: Meter
+    400008: Thingies
     2300000: Frame
     2300002: //RootNode
+    2300004: Meter
+    2300006: Thingies
     3300000: Frame
     3300002: //RootNode
+    3300004: Meter
+    3300006: Thingies
     4300000: Frame
+    4300002: Thingies
+    4300004: Meter
     7400000: Default Take
     9500000: //RootNode
   materials:
