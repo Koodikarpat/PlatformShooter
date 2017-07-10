@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour {
     public bool inCombat;               //onko vihollinen taistelemassa
     bool turning;                       //kääntyy kohdetta päin
     Quaternion rotationToTarget;        //kääntyy tähän suuntaan
+    public GameObject currentWeapon;           //nykyinen ase
 
     //tsekkaa jos näkyy pelaajia
     void ScanPlayers()
@@ -35,7 +36,7 @@ public class Enemy : MonoBehaviour {
             vec = vec.normalized;
             Ray ray = new Ray(transform.position, vec);
 
-            if (Physics.Raycast(ray, out hit, scanRange, scanLayer)) //raycastaa ympäristöä, osuu ainoastaan movement layerin objekteihin
+            if (Physics.Raycast(ray, out hit, scanRange)) //raycastaa ympäristöä, osuu ainoastaan movement layerin objekteihin
             {
                 if (hit.transform.name == "Player") //jos osuu pelaajaan, aseta se kohteeksi
                 {
@@ -61,7 +62,8 @@ public class Enemy : MonoBehaviour {
     {
         if (currentTarget == null) return;
         Vector3 lookPos = currentTarget.transform.position - transform.position;
-        lookPos -= transform.right * 0.7f; //tähtää vähän ohi että koska ase ei ole keskellä viholista
+        //tähtää vähän "ohi" koska aseen model ei ole jostain syystä keskellä transformia
+        currentWeapon.transform.LookAt(currentTarget.transform.position);
         rotationToTarget = Quaternion.LookRotation(lookPos);
         rotationToTarget.x = rotationToTarget.z = 0;
         turning = true;

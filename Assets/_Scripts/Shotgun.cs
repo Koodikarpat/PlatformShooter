@@ -7,16 +7,16 @@ public class Shotgun : BaseWeapon{
 	public int shotGunPellets;
 
 
-	public override void Fire () {
+	public override void Fire (Vector3 origin, Vector3 direction) {
 	
-		base.Fire ();	
+		base.Fire (origin, direction);	
 
 		if (canFire == true && currentAmmo > 0 && !reloading) {
 		
 			muzzleFlash.Play ();
 			timer = 0;
 			currentAmmo -= 1;
-			CheckHits ();
+			CheckHits (origin, direction);
 			StartCoroutine (ShotEffect());
 
 			Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));

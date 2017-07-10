@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BaseWeapon : MonoBehaviour
 {
@@ -21,7 +20,6 @@ public class BaseWeapon : MonoBehaviour
 	public static float recoilOffsetY;
 	public int range;
 
-
 	public AudioSource gunAudio;					//shooting sound
 	public WaitForSeconds tracerLifetime = new WaitForSeconds(0.5f);		//how long bullet tracer will be visible
 	public Transform gunEnd;		//end of the gun, where the tracer comes from (place gameobject at the end of the gun)
@@ -34,18 +32,17 @@ public class BaseWeapon : MonoBehaviour
 	public LineRenderer bulletTracer;
 
     
-	public void CheckHits()
+	public void CheckHits(Vector3 origin, Vector3 direction)
     {
-        Vector3 forward = transform.TransformDirection(Vector3.forward) * range;
         Vector3 tempPos = transform.position - transform.right * 0.3f; //jostain syystä pistoolin model ei oo keskellä transformia
-        Debug.DrawRay(tempPos, forward, Color.red, 5f);
-
-       /* Boxhp = GameObject.Find("Enemy").GetComponent<BoxHP>();
-        if (Physics.Raycast(transform.position, forward, 200, LayerMask.GetMask("Player")))
+        Debug.DrawRay(tempPos, direction, Color.red, 2f);
+        Debug.DrawRay(origin, direction, Color.green, 2f);
+        RaycastHit hit;
+        if (Physics.Raycast(origin, direction, out hit, weaponRange))
         {
-            Debug.Log("Hit");
-            Boxhp.TakeDamage();
-        }*/
+            if (hit.transform.gameObject.layer == gameObject.layer || (hit.transform.gameObject.layer != 8 && hit.transform.gameObject.layer != 9)) return;
+            hit.transform.gameObject.GetComponent<BoxHP>().TakeDamage(damage);
+        }
     }
 
     public virtual void Reload()
@@ -64,11 +61,35 @@ public class BaseWeapon : MonoBehaviour
         reloading = false;
 		//Debug.Log ("Reloaded");
     }
-    public virtual void Fire()
+    public virtual void Fire(Vector3 origin, Vector3 direction)
     {
 		//Debug.Log (canFire + " " + reloading + " " + currentAmmo);
 		if (canFire == true && currentAmmo > 0 && !reloading)
         {
+//<<<<<<< HEAD
+//            muzzleFlash.Play();
+//            timer = 0;
+//            currentAmmo -= 1;
+//            //print(currentAmmo);
+//            CheckHits(origin, direction);
+//			StartCoroutine (ShotEffect());
+//            Vector3 rayOrigin;
+//            if (mainCamera != null) rayOrigin = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+//            else rayOrigin = transform.position;
+//			RaycastHit hit;
+
+//            if (bulletTracer != null) bulletTracer.SetPosition (0, gunEnd.position);
+
+//            //if (Physics.Raycast(rayOrigin, mainCamera.transform.forward, out hit, weaponRange))
+//            //{
+//            //    if (bulletTracer != null) bulletTracer.SetPosition(1, hit.point);
+//            //}
+
+//            //else
+//            //{
+//            //    if (bulletTracer != null) bulletTracer.SetPosition(1, rayOrigin + (mainCamera.transform.forward * weaponRange));
+//            //}
+//=======
 			
 				Debug.Log ("Fire() toimii?");
 				SprayAndPray ();
@@ -76,27 +97,27 @@ public class BaseWeapon : MonoBehaviour
 				timer = 0;
 				currentAmmo -= 1;
 				print (currentAmmo);
-				CheckHits ();
+				CheckHits (origin, direction);
 				StartCoroutine (ShotEffect ());
 
 				/*if (Physics.Raycast (rayOrigin, mainCamera.transform.forward, out hit, weaponRange)) {
 				bulletTracer.SetPosition (1, hit.point);	
 				} */
 
-				Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
+				//Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
 				RaycastHit hit;
 
 				bulletTracer.SetPosition (0, gunEnd.position);
 
-				if (Physics.Raycast (rayOrigin, SprayAndPray (), out hit, weaponRange)) {
+				if (Physics.Raycast (origin, SprayAndPray (), out hit, weaponRange)) {
 					bulletTracer.SetPosition (1, hit.point);	
 				} else {
-					bulletTracer.SetPosition (1, rayOrigin + (mainCamera.transform.forward * weaponRange));
+					bulletTracer.SetPosition (1, origin + (direction * weaponRange));
 				}
 				
 				recoilOffsetY = 2.5f * firerate / 1.0f;
 				//transform.parent.Rotate (Vector3.right * recoilOffsetY);
-				transform.parent.parent.GetComponent<CameraControl> ().offsetY += recoilOffsetY;
+				//transform.parent.parent.GetComponent<CameraControl> ().offsetY += recoilOffsetY;
 				Debug.Log ("Recoil on" + recoilOffsetY);
 				//recoilOffsetY = - 2.5f * firerate /1.0f;
 				//transform.parent.parent.GetComponent<CameraControl> ().offsetY += recoilOffsetY;
@@ -122,7 +143,6 @@ public class BaseWeapon : MonoBehaviour
         timer += Time.deltaTime;
         canFire = timer > firerate;
 		//Debug.Log (mainCamera);
-		GameObject.Find ("Player/CrosshairCanvas/BulletCount").GetComponent<Text>().text = currentAmmo + "/" + maxAmmo + "    ";
 
     }
 

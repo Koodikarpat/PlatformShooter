@@ -8,13 +8,17 @@ public class ShootingAI : MonoBehaviour {
     Enemy enemyScript;
     public float range;
     public float fireRate;
+    public float reflexDelay;
+    bool readyToShoot;
     float time;
+    Vector3 direction;
 
     // Use this for initialization
     void Start () {
 
         enemyScript = GetComponent<Enemy>();
-        range = weapon.range;
+        range = weapon.weaponRange;
+        readyToShoot = false;
 
 	}
 	
@@ -23,19 +27,26 @@ public class ShootingAI : MonoBehaviour {
 
         time += Time.deltaTime;
 
-        if (range != weapon.range) range = weapon.range;
+        if (range != weapon.weaponRange) range = weapon.weaponRange;
 
-        if (enemyScript.inCombat)
+        if (enemyScript.inCombat && time >= fireRate)
         {
-            if (time >= fireRate)
+            if (!readyToShoot)
             {
-                weapon.Fire();
-                time = 0;
+                direction = weapon.transform.TransformDirection(Vector3.forward) * range;
+                readyToShoot = true;
             }
-            if (weapon.currentAmmo == 0)
+            if (time >= fireRate + reflexDelay && readyToShoot)
             {
-                weapon.Reload();
+                weapon.Fire(weapon.transform.position, direction);
+                time = 0;
+                readyToShoot = false;
             }
         }
-	}
+
+        if (weapon.currentAmmo == 0)
+        {
+            weapon.Reload();
+        }
+    }
 }
