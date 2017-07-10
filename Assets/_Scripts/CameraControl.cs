@@ -47,7 +47,7 @@ public class CameraControl : MonoBehaviour {
 		}
 
         //Mahdollistaa hiiren muuttamisen näkyväksi ja näkymättömäksi pelin aikana
-        if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetKeyDown(KeyCode.H))
         {
             if (cursorlocked)
             {

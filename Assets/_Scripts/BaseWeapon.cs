@@ -19,6 +19,7 @@ public class BaseWeapon : MonoBehaviour
 	public AudioSource reloadSound;
 	public bool automaticRifle;        //if your gun is a machine gun etc enable this option
 	public static float recoilOffsetY;
+	public int range;
 
 
 	public AudioSource gunAudio;					//shooting sound
