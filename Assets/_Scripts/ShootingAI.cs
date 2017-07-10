@@ -17,7 +17,7 @@ public class ShootingAI : MonoBehaviour {
     void Start () {
 
         enemyScript = GetComponent<Enemy>();
-        range = weapon.range;
+        range = weapon.weaponRange;
         readyToShoot = false;
 
 	}
@@ -27,7 +27,7 @@ public class ShootingAI : MonoBehaviour {
 
         time += Time.deltaTime;
 
-        if (range != weapon.range) range = weapon.range;
+        if (range != weapon.weaponRange) range = weapon.weaponRange;
 
         if (enemyScript.inCombat && time >= fireRate)
         {
