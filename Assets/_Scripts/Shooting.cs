@@ -19,6 +19,7 @@ public class Shooting : MonoBehaviour {
 		secondary.SetActive(false);
 		currentWeapon = primary.GetComponent<BaseWeapon> ();
 
+		ammoText.text = currentWeapon.currentAmmo + "/" + currentWeapon.maxAmmo;
         Debug.Log (currentWeapon);
 	}
 
