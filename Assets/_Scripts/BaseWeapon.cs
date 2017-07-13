@@ -48,7 +48,12 @@ public class BaseWeapon : MonoBehaviour
 
     public virtual void Reload()
     {
-        StartCoroutine(ReloadThread());
+		if (currentAmmo != maxAmmo)
+		{
+			if (reloading == false){
+        		StartCoroutine(ReloadThread());
+			}
+		}
     }
     private IEnumerator ReloadThread()
     {
@@ -92,7 +97,7 @@ public class BaseWeapon : MonoBehaviour
 //            //}
 //=======
 			
-				Debug.Log ("Fire() toimii?");
+				//Debug.Log ("Fire() toimii?");
 				SprayAndPray ();
 				muzzleFlash.Play ();
 				timer = 0;

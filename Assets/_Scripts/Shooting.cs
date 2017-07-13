@@ -19,7 +19,7 @@ public class Shooting : MonoBehaviour {
 		secondary.SetActive(false);
 		currentWeapon = primary.GetComponent<BaseWeapon> ();
 
-		ammoText.text = currentWeapon.currentAmmo + "/" + currentWeapon.maxAmmo;
+		ammoText.text = currentWeapon.maxAmmo + "/" + currentWeapon.maxAmmo;
         Debug.Log (currentWeapon);
 	}
 
@@ -35,8 +35,7 @@ public class Shooting : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            currentWeapon.Reload();
-            ammoText.text = currentWeapon.currentAmmo + "/" + currentWeapon.maxAmmo;
+			StartCoroutine(Reload());
         }
 
 		if (Input.GetKeyDown(KeyCode.Alpha1)) 
@@ -59,4 +58,10 @@ public class Shooting : MonoBehaviour {
 
     }
 
+	public IEnumerator Reload()
+	{
+		currentWeapon.Reload ();
+		yield return new WaitForSeconds (currentWeapon.reloadTime);
+		ammoText.text = currentWeapon.currentAmmo + "/" + currentWeapon.maxAmmo;
+	}
 }
