@@ -36,7 +36,7 @@ public class Health : MonoBehaviour
 		}
 		if (other.gameObject.CompareTag ("HP")) 
 		{
-			currentHealth = currentHealth + 20;
+			currentHealth = currentHealth + 30;
 			if (currentHealth >= maxHealth)
 			{
 				currentHealth = maxHealth;

@@ -5,38 +5,98 @@ using UnityEngine.UI;
 
 //Hoitaa testitarkoituksessa käytettyjen laatikkojen hp:n tarkkailusta
 public class BoxHP : MonoBehaviour {
-	public float hp = 100;
-    public GameObject healthTextObject;
-    Text healthText;
+	public int maxhp = 100;
+   
 
-	public void TakeDamage()
+    
+	public int currenthp;
+
+	public int minhp = 0;
+
+
+
+	 public void TakeDamage()
     {
-		hp -= 10;
+		currenthp -= 10;
+	
 	}
 
     public void StabDamage()
     {
-        hp -= 15;
+        currenthp -= 100;
     }
 
+	public void hpbox()
+	{
+		currenthp += 30;
+	}
 	void Start ()
     {
-        healthText = healthTextObject.GetComponent<Text>();
+		
+
+		currenthp = maxhp;
+       
+
 	}
 
 	void Update ()
+
+		
+	
+
     {
+		
 
 
-			if (hp <= 0)
+
+		GameObject Player = GameObject.Find ("Player");
+		healthbar healthbar = Player.GetComponent<healthbar> ();
+
+		healthbar.SetHealthText ();
+
+		GameObject Pistol = GameObject.Find ("Pistol");
+		Shooting Shooting = Player.GetComponent<Shooting> ();
+
+		if (currenthp <= 0)
             {
-				transform.position = new Vector3(5f, 0.5f, 7f);
-				hp = 100;
-			    print ("dead");
+			
+			currenthp = maxhp;
+
+
+
+			print ("dead");
+			transform.position = new Vector3(Random.Range(1f , 99f), 0.5f, Random.Range( 1f , 149f));
 			}
 
-        healthText.text = "HP:" + hp.ToString();
+
 		}
+
+
+	void OnTriggerEnter(Collider other) 
+	{
+		if (other.gameObject.CompareTag ("Damage")) {
+		
+		
+
+			TakeDamage ();
+		} 
+
+			if (currenthp <= minhp) 
+			{
+				currenthp = minhp;
+
+		}
+		if (other.gameObject.CompareTag ("Health")) 
+		{
+			hpbox ();
+			if (currenthp >= maxhp)
+			{
+				currenthp = maxhp;
+			}
+		}
+	}
+
+
 	}
 
 

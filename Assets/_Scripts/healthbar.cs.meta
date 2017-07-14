@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 1deb90c15af28b54793bc4c8a9c6ccfd
-timeCreated: 1499421869
+guid: b4a9193270d594a41a7e7cb3de15d6fa
+timeCreated: 1499927607
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - healthTextObject: {fileID: 1961740136844822, guid: 56509801bd7395047bfe7a99cdc739b8,
-      type: 2}
   - healthslider: {fileID: 114183532177966384, guid: 586db00c5543cbd47980701abfd76dd3,
+      type: 2}
+  - healthtext: {fileID: 114770126484750308, guid: 11571f986571b3e46b0418216a8eb571,
       type: 2}
   executionOrder: 0
   icon: {instanceID: 0}

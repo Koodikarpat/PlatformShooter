@@ -1,10 +1,21 @@
 fileFormatVersion: 2
 guid: 40ffc54b8e39ba94c81bfaf64b89f974
-timeCreated: 1498731985
+timeCreated: 1499932539
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - muzzleFlash: {fileID: 198398064222954372, guid: 20fe0e9a433e3174598316180557d019,
+      type: 2}
+  - reloadSound: {instanceID: 0}
+  - ammocount: {fileID: 114481073781523560, guid: 3de580c954d10564e9f49164b9e6dee2,
+      type: 2}
+  - ammoslider: {fileID: 114221425638921448, guid: e465aba1a7219c344bbb52afc156cfb2,
+      type: 2}
+  - gunAudio: {instanceID: 0}
+  - gunEnd: {instanceID: 0}
+  - mainCamera: {instanceID: 0}
+  - bulletTracer: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

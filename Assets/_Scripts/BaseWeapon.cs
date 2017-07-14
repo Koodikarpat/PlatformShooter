@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseWeapon : MonoBehaviour
 {
@@ -11,9 +12,13 @@ public class BaseWeapon : MonoBehaviour
     public bool canFire;
     public bool reloading = false;
     public float reloadTime;
-    public int maxAmmo;
+	public int maxAmmo;
     public int currentAmmo;
 	public AudioSource reloadSound;
+	public Text ammocount;
+	public Slider ammoslider;
+	BaseWeapon currentWeapon;
+
 
 	public AudioSource gunAudio;						//shooting sound
 	public WaitForSeconds tracerLifetime = new WaitForSeconds(0.07f);		//how long bullet tracer will be visible
@@ -40,19 +45,27 @@ public class BaseWeapon : MonoBehaviour
 
     public virtual void Reload()
     {
-        StartCoroutine(ReloadThread());
+		
+		if (Input.GetKeyDown (KeyCode.R) && currentAmmo == maxAmmo) {
+			reloading = false;
+		}
+		else
+			StartCoroutine(ReloadThread());
     }
     private IEnumerator ReloadThread()
     {
+		
+	
         reloading = true;
         Debug.Log("Reload");
-		reloadSound.Play ();
+		//reloadSound.Play ();
 
         yield return new WaitForSeconds(reloadTime);
 
-        currentAmmo = maxAmmo;
+		currentAmmo = maxAmmo;
         reloading = false;
 		Debug.Log ("Reloaded");
+
     }
     public virtual void Fire()
     {
@@ -63,9 +76,12 @@ public class BaseWeapon : MonoBehaviour
             muzzleFlash.Play();
             timer = 0;
             currentAmmo -= 1;
+
+
+
             print(currentAmmo);
             CheckHits();
-			StartCoroutine (ShotEffect());
+			//StartCoroutine (ShotEffect());
 			Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
 			RaycastHit hit;
 
@@ -85,9 +101,15 @@ public class BaseWeapon : MonoBehaviour
 
     void Start()
     {
+		
+		GameObject Player = GameObject.Find ("Player");
+		Shooting Shooting = Player.GetComponent<Shooting> ();
         canFire = true;
-        currentAmmo = maxAmmo; 
+		currentAmmo = maxAmmo; 
 		//mainCamera = GetComponentInParent<Camera> ();
+
+
+
     }
 
     void Update()
@@ -95,8 +117,40 @@ public class BaseWeapon : MonoBehaviour
         timer += Time.deltaTime;
         canFire = timer > firerate;
 		Debug.Log (mainCamera);
-    }
 
+		GameObject Player = GameObject.Find ("Player");
+		BoxHP BoxHP = Player.GetComponent<BoxHP> ();
+
+		GameObject Pistol = GameObject.Find ("Pistol");
+		Shooting Shooting = Player.GetComponent<Shooting> ();
+
+
+
+		{
+			if (BoxHP.currenthp <= 0)
+			{
+				Shooting.secondary.SetActive (false);
+				Shooting.primary.SetActive (true);
+				currentWeapon = Shooting.primary.GetComponent <BaseWeapon> ();
+				currentWeapon.currentAmmo = 15; //currentWeapon.maxAmmo;
+				canFire = false;
+				Debug.Log (canFire + " " + reloading + " " + currentAmmo + currentWeapon);
+				Shooting.secondary.SetActive (false);
+				Shooting.primary.SetActive (true);
+				canFire = true;
+				currentWeapon.currentAmmo = 15;
+
+			}
+
+			if (currentWeapon = Shooting.primary.GetComponent <BaseWeapon> ()) 
+			{
+				
+				canFire = true;
+				Shooting.secondary.SetActive (false);
+			}
+		}
+	
+	}
 	public IEnumerator ShotEffect()
 	{
 		Debug.Log ("ShotEffect toimii?");
@@ -106,9 +160,14 @@ public class BaseWeapon : MonoBehaviour
 		bulletTracer.enabled = false;
 	}
 
+
+
 	void SprayAndPray() 
 	{
 		
 	}
+
+
+
 
 }

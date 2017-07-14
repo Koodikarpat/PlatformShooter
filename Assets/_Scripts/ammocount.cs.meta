@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f7e55253811d6a74e81e98e6fadf2d82
+timeCreated: 1499927627
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - ammotext: {fileID: 114481073781523560, guid: 3de580c954d10564e9f49164b9e6dee2,
+      type: 2}
+  - ammoslider: {fileID: 114221425638921448, guid: e465aba1a7219c344bbb52afc156cfb2,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

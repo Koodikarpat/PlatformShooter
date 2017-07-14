@@ -19,36 +19,36 @@ public class Shooting : MonoBehaviour {
 	}
 
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
+	{
+		if (Input.GetKeyDown (KeyCode.Mouse0)) {
 			Debug.Log (currentWeapon);
-			currentWeapon.Fire();
-        }
+			currentWeapon.Fire ();
+		}
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            currentWeapon.Reload();
-        }
+		if (Input.GetKeyDown (KeyCode.R)) {
+			currentWeapon.Reload ();
 
-		if (Input.GetKeyDown(KeyCode.Alpha1)) 
-		{
-			secondary.SetActive(false);
-			primary.SetActive(true);
+		}
+
+		if (Input.GetKeyDown (KeyCode.Alpha1)) {
+			secondary.SetActive (false);
+			primary.SetActive (true);
 			currentWeapon = primary.GetComponent<BaseWeapon> ();
+			print ("gun");
 		}
 
-		if (Input.GetKeyDown(KeyCode.Alpha2))
-		{
-			primary.SetActive(false);
-			secondary.SetActive(true);
+		if (Input.GetKeyDown (KeyCode.Alpha2)) {
+			primary.SetActive (false);
+			secondary.SetActive (true);
 			currentWeapon = secondary.GetComponent<BaseWeapon> ();
+
+			print ("knife");
 		}
-			
+	}	
+		
 
 
     }
 
-}
 
 
