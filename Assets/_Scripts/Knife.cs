@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Knife : BaseWeapon
 {
-
-
     public BoxHP boxihp;
 
 

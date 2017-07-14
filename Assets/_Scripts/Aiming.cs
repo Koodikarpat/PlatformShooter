@@ -15,7 +15,7 @@ public class Aiming : MonoBehaviour {
             if (Physics.Raycast(transform.position, forward, 100, LayerMask.GetMask("Player")))
             {
                 print("Hit!");
-                boxihp.TakeDamage();
+                boxihp.TakeDamage(10);
             }
     }
 
@@ -26,7 +26,7 @@ public class Aiming : MonoBehaviour {
         if (Physics.Raycast (transform.position, forward, 7, LayerMask.GetMask("Player")))
         {
             print("Stab!");
-            boxihp.StabDamage();
+            boxihp.TakeDamage(15);
         }
     }
 }

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class BoxHP : MonoBehaviour {
 	public int maxhp = 100;
    
-
     
 	public int currenthp;
 
@@ -15,16 +14,14 @@ public class BoxHP : MonoBehaviour {
 
 
 
-	 public void TakeDamage()
-    {
-		currenthp -= 10;
-	
-	}
-
     public void StabDamage()
     {
         currenthp -= 100;
     }
+	public void TakeDamage(int damage)
+    {
+		hp -= damage;
+	}
 
 	public void hpbox()
 	{
@@ -40,15 +37,7 @@ public class BoxHP : MonoBehaviour {
 	}
 
 	void Update ()
-
-		
-	
-
     {
-		
-
-
-
 		GameObject Player = GameObject.Find ("Player");
 		healthbar healthbar = Player.GetComponent<healthbar> ();
 
@@ -58,18 +47,17 @@ public class BoxHP : MonoBehaviour {
 		Shooting Shooting = Player.GetComponent<Shooting> ();
 
 		if (currenthp <= 0)
-            {
-			
-			currenthp = maxhp;
+        {
+		
+		currenthp = maxhp;
 
 
 
-			print ("dead");
-			transform.position = new Vector3(Random.Range(1f , 99f), 0.5f, Random.Range( 1f , 149f));
-			}
-
-
+		print ("dead");
+		transform.position = new Vector3(Random.Range(1f , 99f), 0.5f, Random.Range( 1f , 149f));
 		}
+
+	}
 
 
 	void OnTriggerEnter(Collider other) 
@@ -97,6 +85,6 @@ public class BoxHP : MonoBehaviour {
 	}
 
 
-	}
+}
 
 
