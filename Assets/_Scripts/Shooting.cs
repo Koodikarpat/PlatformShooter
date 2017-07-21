@@ -35,7 +35,7 @@ public class Shooting : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-			StartCoroutine(Reload());
+            currentWeapon.Reload();
         }
 
 		if (Input.GetKeyDown(KeyCode.Alpha1)) 

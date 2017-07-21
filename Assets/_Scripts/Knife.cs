@@ -9,9 +9,9 @@ public class Knife : BaseWeapon
 
 
 
-    public override void Fire()
+    public override void Fire(Vector3 origin, Vector3 direction)
     {
-        base.Fire();
+        base.Fire(origin, direction);
 
         if (canFire == true)
         {

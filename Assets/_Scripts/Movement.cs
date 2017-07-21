@@ -2,46 +2,48 @@
 using System.Collections;
 
 //Hoitaa liikkumisen ja hyppimisen
-public class Movement : Photon.MonoBehaviour {
-	 
-	public float speed;     //Määrää pelaajan nopeuden
-	public float jumpSpeed;     //Määrää pelaajan hypyn korkeuden
-	public float gravity;   //Määrää painovoiman suuruuden
+public class Movement : Photon.MonoBehaviour
+{
+
+    public float speed;     //Määrää pelaajan nopeuden
+    public float jumpSpeed;     //Määrää pelaajan hypyn korkeuden
+    public float gravity;   //Määrää painovoiman suuruuden
 
     private GameObject ladder;
     private Rigidbody rb;
     public Vector3 moveDirection;
     private bool candoublejump;     //Tarkistaa, pystyykö pelaaja tekemään tuplahypyn
     public bool canClimb;           //Tarkistaa, pystyykö pelaaja kiipeämään
-
+    Animator anim;
 
     //Pitäisi tarkistaa moninpelissä, onko tämä hahmo tämän pelaajan. Jos ei => hahmon liikuttaminen ei ole mahdollista. Ei toimi tällä hetkellä
     void Awake()
     {
-       // if(!photonView.isMine)
+        anim = GetComponent<Animator> ();
+        // if(!photonView.isMine)
         {
-           // enabled = false;
+            // enabled = false;
         }
         DontDestroyOnLoad(this.gameObject);
     }
 
-	void Start ()
-	{
-		rb = GetComponent<Rigidbody>();
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
         ladder = GameObject.Find("Ladder");
-	}
+    }
 
     //Tarkistavat, koskettaako pelaaja tikkaita
-    void OnTriggerEnter (Collider collider)
+    void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject == ladder)
+        if (collider.gameObject == ladder)
         {
             canClimb = true;
             rb.useGravity = false;
         }
     }
 
-    void OnTriggerExit (Collider collider)
+    void OnTriggerExit(Collider collider)
     {
         if (collider.gameObject == ladder)
         {
@@ -49,13 +51,14 @@ public class Movement : Photon.MonoBehaviour {
             rb.useGravity = true;
         }
     }
-		
 
-		
+
+
     void Update()
     {
-        if (canClimb)
-        {
+            if (canClimb)
+            {
+                
             //Tikkailla liikkuminen
             if (Input.GetKey(KeyCode.W))
             {
@@ -88,12 +91,14 @@ public class Movement : Photon.MonoBehaviour {
             //Normaali liikkuminen
             moveDirection = new Vector3(Input.GetAxis("Horizontal") * speed, rb.velocity.y, Input.GetAxis("Vertical") * speed);
             moveDirection = transform.TransformDirection(moveDirection);
-
+           
             //Hyppiminen
             if (Input.GetKeyDown(KeyCode.Space))
                 if (isGrounded())
-                {
-                    moveDirection.y = jumpSpeed;
+                    if (Input.GetButtonDown("Jump"))
+{
+                        anim.SetTrigger("IsJumping");
+                        moveDirection.y = jumpSpeed;
                     candoublejump = true;
                 }
                 else
@@ -109,10 +114,10 @@ public class Movement : Photon.MonoBehaviour {
             moveDirection.y -= gravity * Time.deltaTime;
             rb.velocity = moveDirection;
         }
-        }
+    }
 
-	//Tarkistaa, koskettaako pelaaja maata
-    bool isGrounded ()
+    //Tarkistaa, koskettaako pelaaja maata
+    bool isGrounded()
     {
         Vector3 position = transform.position;
         position.y = GetComponent<Collider>().bounds.min.y + 0.1f;
@@ -120,5 +125,26 @@ public class Movement : Photon.MonoBehaviour {
         Debug.DrawRay(position, Vector3.down * length);
         bool grounded = Physics.Raycast(position, Vector3.down, length, LayerMask.GetMask("Default"));
         return grounded;
+
+        
+
+
+    }
+
+void Animating (float h, float v)
+    {
+        bool walking = h != 0f || v != 0f;
+       anim.SetBool("IsWalking", walking);
+    }
+
+
+    void FixedUpdate()
+    {
+        float h = Input.GetAxisRaw ("Horizontal");
+        float v = Input.GetAxisRaw ("Vertical");
+        Animating(h, v);
     }
 }
+
+
+

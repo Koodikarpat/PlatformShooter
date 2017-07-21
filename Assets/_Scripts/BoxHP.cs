@@ -20,7 +20,7 @@ public class BoxHP : MonoBehaviour {
     }
 	public void TakeDamage(int damage)
     {
-		hp -= damage;
+		currenthp -= damage;
 	}
 
 	public void hpbox()
@@ -66,7 +66,7 @@ public class BoxHP : MonoBehaviour {
 		
 		
 
-			TakeDamage ();
+			TakeDamage (10);
 		} 
 
 			if (currenthp <= minhp) 

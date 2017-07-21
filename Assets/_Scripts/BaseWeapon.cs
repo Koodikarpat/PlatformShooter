@@ -79,7 +79,7 @@ public class BaseWeapon : MonoBehaviour
     public virtual void Fire(Vector3 origin, Vector3 direction)
     {
 		//Debug.Log (canFire + " " + reloading + " " + currentAmmo);
-		if (canFire == true && currentAmmo > 0 && !reloading)
+		/*if (canFire == true && currentAmmo > 0 && !reloading)
         {
 			Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
 
@@ -111,7 +111,7 @@ public class BaseWeapon : MonoBehaviour
 				//transform.parent.parent.GetComponent<CameraControl> ().offsetY += recoilOffsetY;
 			}
 
-        }
+        }*/
     }
 
 	/*
