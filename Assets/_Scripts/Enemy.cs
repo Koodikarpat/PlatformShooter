@@ -62,7 +62,8 @@ public class Enemy : MonoBehaviour {
     {
         if (currentTarget == null) return;
         Vector3 lookPos = currentTarget.transform.position - transform.position;
-        //tähtää vähän "ohi" koska aseen model ei ole jostain syystä keskellä transformia
+		Debug.Log (lookPos);
+        //tähtää vähän "ohi" koska aseen model ei ole jostain syystä keskellä transformia, ja raycast menee PELAAJAN KAMERAN kautta, joten pelaajan kameran kulma vaikuttaa siihen, mihin suuntaan AI ampuu
         currentWeapon.transform.LookAt(currentTarget.transform.position);
         rotationToTarget = Quaternion.LookRotation(lookPos);
         rotationToTarget.x = rotationToTarget.z = 0;

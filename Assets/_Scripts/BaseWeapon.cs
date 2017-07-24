@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BaseWeapon : MonoBehaviour
 {
-
+	//You'll have to assign many of the variables to actually make the gun shoot
 
     public ParticleSystem muzzleFlash;		//visual flash when you shoot the gun
     public float firerate;
@@ -17,6 +17,7 @@ public class BaseWeapon : MonoBehaviour
 	public int maxAmmo;
     public int currentAmmo;
 	public AudioSource reloadSound;
+	public ParticleSystem hitEffect;		//the hit particle when shooting at things
 
 	public Text ammocount;
 	public Slider ammoslider;
@@ -27,7 +28,6 @@ public class BaseWeapon : MonoBehaviour
 	public int range;
 
 	public AudioSource gunAudio;					//shooting sound
-	public WaitForSeconds tracerLifetime = new WaitForSeconds(0.5f);		//how long bullet tracer will be visible
 	public Transform gunEnd;		//end of the gun, where the tracer comes from (place gameobject at the end of the gun)
 	public float weaponRange;		//how far the gun can shoot
 	public float shotSpread;		//how bad the bullets spread when shot (bigger is badder, duh) 0,05 is a good starting value
@@ -35,7 +35,6 @@ public class BaseWeapon : MonoBehaviour
 	public int shotsFired;
 
 	public Camera mainCamera;
-	public LineRenderer bulletTracer;
 
     
 	public void CheckHits(Vector3 origin, Vector3 direction)
@@ -48,6 +47,7 @@ public class BaseWeapon : MonoBehaviour
         {
             if (hit.transform.gameObject.layer == gameObject.layer || (hit.transform.gameObject.layer != 8 && hit.transform.gameObject.layer != 9)) return;
             hit.transform.gameObject.GetComponent<BoxHP>().TakeDamage(damage);
+			Debug.Log ("checkhits osuma");
         }
     }
 
@@ -78,47 +78,38 @@ public class BaseWeapon : MonoBehaviour
     }
     public virtual void Fire(Vector3 origin, Vector3 direction)
     {
-		//Debug.Log (canFire + " " + reloading + " " + currentAmmo);
-		/*if (canFire == true && currentAmmo > 0 && !reloading)
-        {
-			Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
+		if (canFire == true && currentAmmo > 0 && !reloading) {
+			SprayAndPray ();
+			muzzleFlash.Play ();
+			timer = 0;
+			currentAmmo -= 1;
 
-			if (Physics.Raycast (rayOrigin, mainCamera.transform.forward, out hit, weaponRange)) {
-			
-				//Debug.Log ("Fire() toimii?");
-				SprayAndPray ();
-				muzzleFlash.Play ();
-				timer = 0;
-				currentAmmo -= 1;
-				CheckHits (origin, direction);
-				StartCoroutine (ShotEffect ());
+			Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));		//should set raycast origin to the center of the screen
+			RaycastHit hit;
 
-				//Vector3 rayOrigin = mainCamera.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, 0f));
+			if (gunAudio != null)
+				gunAudio.Play ();
 
-				bulletTracer.SetPosition (0, gunEnd.position);
-
-				if (Physics.Raycast (origin, SprayAndPray (), out hit, weaponRange)) {
-					bulletTracer.SetPosition (1, hit.point);	
-				} else {
-					bulletTracer.SetPosition (1, origin + (direction * weaponRange));
-				}
-				
-				recoilOffsetY = 2.5f * firerate / 1.0f;
-				//transform.parent.Rotate (Vector3.right * recoilOffsetY);
-				//transform.parent.parent.GetComponent<CameraControl> ().offsetY += recoilOffsetY;
-				Debug.Log ("Recoil on" + recoilOffsetY);
-				//recoilOffsetY = - 2.5f * firerate /1.0f;
-				//transform.parent.parent.GetComponent<CameraControl> ().offsetY += recoilOffsetY;
+			if (Physics.Raycast (rayOrigin, SprayAndPray (), out hit, weaponRange)) {
+				Instantiate (hitEffect, hit.point, Quaternion.identity);
+			} else {
+					
 			}
 
-        }*/
+			recoilOffsetY = 2.5f * firerate / 1.0f;
+			transform.parent.parent.GetComponent<CameraControl> ().offsetY += recoilOffsetY;
+			Debug.Log ("Recoil on" + recoilOffsetY);
+			shotsFired++;
+			CheckHits (origin, direction);
+
+
+		} else {
+			if (reloadSound != null && !reloading && currentAmmo <= 0)
+				reloadSound.Play ();
+		}
+
     }
 
-	/*
-	 * loop until->
-	 * get direction
-	 * set spread (voi myös olla no spread) with random
-	 * */
 
     void Start()
     {
@@ -126,12 +117,9 @@ public class BaseWeapon : MonoBehaviour
 		GameObject Player = GameObject.Find ("Player");
 		Shooting Shooting = Player.GetComponent<Shooting> ();
         canFire = true;
-		currentAmmo = maxAmmo; 
-		//mainCamera = GetComponentInParent<Camera> ();
+		currentAmmo = maxAmmo;
 
-
-
-    }
+	}
 
     void Update()
     {
@@ -168,27 +156,15 @@ public class BaseWeapon : MonoBehaviour
 		}
 	
 	}
-	public IEnumerator ShotEffect()
-	{
-        if (gunAudio != null) gunAudio.Play();
-        if (bulletTracer != null) bulletTracer.enabled = true;
-		yield return tracerLifetime;
-        if (bulletTracer != null) bulletTracer.enabled = false;
-	}
 
-
-	public Vector3 SprayAndPray() 		//aka shooting is inaccurate
+	public Vector3 SprayAndPray() 		//aka shooting is inaccurate, recoil pattern is a 2D cube right now
 	{
 		float vz = 1.0f;
-		float vx = (1 - 2 * Random.value) * shotSpread;
-		float vy = (1 - 2 * Random.value) * shotSpread;
+		float vx = (0.5f - Random.Range(0f, 1f)) * shotSpread;
+		float vy = (0.5f - Random.Range(0f, 1f)) * shotSpread;
 		Vector3 direction = transform.TransformDirection (new Vector3 (vx, vy, vz));
-		//Debug.Log (direction);
 		return direction;
 	}
 		
-
-
-
 
 }

@@ -27,7 +27,7 @@ public class Shooting : MonoBehaviour {
     {
 		if (Input.GetKeyDown(KeyCode.Mouse0) || (Input.GetKey(KeyCode.Mouse0) && currentWeapon.automaticRifle))
         {
-            Vector3 direction = camera.transform.TransformDirection(Vector3.forward) * currentWeapon.weaponRange;
+			Vector3 direction = camera.transform.TransformDirection(Vector3.forward) * currentWeapon.weaponRange;
             currentWeapon.Fire(camera.transform.position, direction);
             ammoText.text = currentWeapon.currentAmmo + "/" + currentWeapon.maxAmmo;
         }

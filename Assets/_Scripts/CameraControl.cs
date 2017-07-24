@@ -43,7 +43,12 @@ public class CameraControl : MonoBehaviour {
 
 		if (offsetY > 0f) 
 		{
-			offsetY += -0.05f;
+			offsetY += -0.13f;       //how fast the crosshair returns to its origo after the recoil
+		}
+
+		if (offsetY > 10f) 
+		{
+			offsetY += -0.30f;		//to prevent the character camera from flipping over when shooting, ie crosshair returns to its origo faster
 		}
 
         //Mahdollistaa hiiren muuttamisen näkyväksi ja näkymättömäksi pelin aikana
